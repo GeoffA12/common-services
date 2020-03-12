@@ -72,7 +72,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             phone = dictionary['phoneNumber']
             
             usernameList = None
-            statement = 'SELECT username FROM '
             statement = f'SELECT username, password FROM {cloud["table"]}'
             sqlConnection = connectToSQLDB(cloud['name'])
             with sqlConnection.cursor() as cursor:
