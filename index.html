@@ -7,17 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <script>
-        var seperationOfConcern = "demand";
-        if (window.location.href.indexOf("supply") != -1) {
-            seperationOfConcern = "supply";
-        }
         let goToLogin = () => {
-            var url = `https://${seperationOfConcern}.team22.softwareengineeringii.com/${seperationOfConcern}-front-end/login/login.html`;
-            window.location.assign(url);
+            window.location.assign("https://supply.team22.softwareengineeringii.com/common-services/login/login.html");
         }
         let goToRegister = () => {
-            var url = `https://${seperationOfConcern}.team22.softwareengineeringii.com/${seperationOfConcern}-front-end/register/register.html`;
-            window.location.assign(url);
+            window.location.assign("https://supply.team22.softwareengineeringii.com/common-services/register/register.html");
         }
     </script>
 
