@@ -51,7 +51,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 rows = cursor.fetchall()
                 usernameList = [x[0] for x in rows]
                 passwordList = [x[1] for x in rows]
-                sqlConnection.close()
             
             # Make a dictionary from the usernameList and passwordList where the key:value pairs
             # are username:password
@@ -93,13 +92,13 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 with sqlConnection.cursor() as cursor:
                     cursor.execute(statement, data)
                     sqlConnection.commit()
-                    sqlConnection.close()
-                
+
                 status = 200
                 responseDict['Success'] = True
         else:
             status = 404
-        
+
+        sqlConnection.close()
         self.send_response(status)
         self.end_headers()
         res = json.dumps(responseDict)
