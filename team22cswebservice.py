@@ -28,6 +28,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             'name': None,
             'table': None,
             }
+        print(path)
+        print(isSupply)
         if isSupply:
             cloud['name'] = 'supply'
             cloud['table'] = 'fleetmanagers'
@@ -117,7 +119,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
 
 def main():
-    port = 4022
+    port = 4023
     # Create an http server using the class and port you defined
     httpServer = http.server.HTTPServer(('', port), SimpleHTTPRequestHandler)
     print("Running on port", port)
