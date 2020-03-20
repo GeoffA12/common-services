@@ -15,11 +15,16 @@
                 alert("You missed either a password, email, or username input.");
                 return;
             }
+	    var urlPrefix = (window.location.href.includes("demand")) ? "demand" : "supply";
+            if (window.location.href.indexOf("supply") != -1) {
+                seperationOfConcern = "supply";
+            }
             const registration = {
                 "email": newEmail,
                 "password": newPassword,
                 "username": newUsername,
-                "phoneNumber": newPhoneNumber
+                "phoneNumber": newPhoneNumber,
+		"cloud": urlPrefix
             }
             sessionStorage.setItem('username', username);
 
@@ -32,17 +37,14 @@
                 body: JSON.stringify(registration)
             }
             console.log(payload);
-            var seperationOfConcern = "demand";
-            if (window.location.href.indexOf("supply") != -1) {
-                seperationOfConcern = "supply";
-            }
-            var url = `https://${seperationOfConcern}.team22.softwareengineeringii.com/registerHandler`;
+            
+            var url = `https://${urlPrefix}.team22.softwareengineeringii.com/registerHandler`;
             console.log(url)
 
             fetch(url, payload).then(function(response) {
                 console.log(response.status);
                 if (response.status == 200) {
-                    url = `https://${seperationOfConcern}.team22.softwareengineeringii.com/${seperationOfConcern}-front-end/dashboard/dashboard.html`
+                    url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`
                     window.location.assign(url);
                 } else {
                     alert("You already have an account! Go to the login page to login.");

@@ -13,12 +13,13 @@
                 alert("You need to enter a username and password");
                 return;
             }
+            var urlPrefix = (window.location.href.includes("demand")) ? "demand" : "supply";
             const login = {
                 "username": username,
-                "password": password
+                "password": password,
+		"cloud": urlPrefix
             };
             sessionStorage.setItem('username', username);
-
             const payload = {
                 method: 'POST',
                 headers: {
@@ -28,16 +29,13 @@
                 body: JSON.stringify(login)
             }
             console.log(payload);
-            var seperationOfConcern = "demand";
-            if (window.location.href.indexOf("supply") != -1) {
-                seperationOfConcern = "supply";
-            }
-            var url = `https://${seperationOfConcern}.team22.softwareengineeringii.com/loginHandler`;
+          
+            var url = `https://${urlPrefix}.team22.softwareengineeringii.com/loginHandler`;
 
             fetch(url, payload).then(function(response) {
                 console.log(response.status);
                 if (response.status == 200) {
-                    url = `https://${seperationOfConcern}.team22.softwareengineeringii.com/${seperationOfConcern}-front-end/dashboard/dashboard.html`
+                    url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`
                     window.location.assign(url);
                 } else {
                     alert("You don't have an account yet! Go to the regisration page.");
