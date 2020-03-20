@@ -5,11 +5,13 @@ import mysql.connector as sqldb
 
 
 def connectToSQLDB(myDB):
+    str = f'team22{myDB}'
+    print(str)
     return sqldb.connect(user = 'root', password = 'password', database = f'team22{myDB}', port = 6022)
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
-    ver = '0.1.0'
+    ver = '0.1.1'
     
     # How to convert the body from a string to a dictionary
     # use 'loads' to convert from byte/string to a dictionary!
@@ -23,41 +25,41 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         print(path)
         responseDict = {}
         dictionary = self.getPOSTBody()
-        isSupply = 'supply' in path
+        print(dictionary)
+        myCloud = dictionary.pop('cloud')
+        isSupply = 'supply' == myCloud
         cloud = {
-            'name': None,
-            'table': None,
+            'name': 'demand',
+            'table': 'customers'
             }
+        print(path)
+        print(isSupply)
         if isSupply:
             cloud['name'] = 'supply'
             cloud['table'] = 'fleetmanagers'
-        else:
-            cloud['name'] = 'demand'
-            cloud['table'] = 'customers'
-        
+    
         if '/loginHandler' in path:
             print(dictionary)
             username = dictionary['username']
             password = dictionary['password']
-            
-            usernameList = None
-            passwordList = None
+        
             statement = f'SELECT username, password FROM {cloud["table"]}'
             sqlConnection = connectToSQLDB(cloud['name'])
-            with sqlConnection.cursor() as cursor:
-                cursor.execute(statement)
-                rows = cursor.fetchall()
-                usernameList = [x[0] for x in rows]
-                passwordList = [x[1] for x in rows]
-            
+            # with sqlConnection.cursor() as cursor:
+            cursor = sqlConnection.cursor()
+            cursor.execute(statement)
+            rows = cursor.fetchall()
+            usernameList = [x[0] for x in rows]
+            passwordList = [x[1] for x in rows]
+            cursor.close()
             # Make a dictionary from the usernameList and passwordList where the key:value pairs
             # are username:password
             userpass = dict(zip(usernameList, passwordList))
-            
+        
             if username in userpass and userpass[username] == password:
                 status = 200
                 responseDict['Success'] = True
-            
+        
             # We'll send a 401 code back to the client if the user hasn't registered in our database
             else:
                 status = 401
@@ -69,33 +71,36 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             password = dictionary['password']
             email = dictionary['email']
             phone = dictionary['phoneNumber']
-            
-            usernameList = None
+    
             statement = f'SELECT username, password FROM {cloud["table"]}'
             sqlConnection = connectToSQLDB(cloud['name'])
-            with sqlConnection.cursor() as cursor:
-                cursor.execute(statement)
-                rows = cursor.fetchall()
-                usernameList = [x[~0] for x in rows]
-            
+            # with sqlConnection.cursor() as cursor:
+            cursor = sqlConnection.cursor()
+            cursor.execute(statement)
+            rows = cursor.fetchall()
+            usernameList = [x[~0] for x in rows]
+            cursor.close()
+    
             # The equivalent of arr.contains(e)
             if username in usernameList:
                 status = 401
-            
+    
             else:
                 print(username)
                 print(password)
-                statement = 'INSERT INTO %s (username, password, email, phone) VALUES (%s, %s, %s, %s)'
-                data = (cloud['table'], username, password, email, phone)
-                with sqlConnection.cursor() as cursor:
-                    cursor.execute(statement, data)
-                    sqlConnection.commit()
-
+                statement = f'INSERT INTO {cloud["table"]} (username, password, email, phone) VALUES (%s, %s, %s, %s)'
+                data = (username, password, email, phone)
+                # with sqlConnection.cursor() as cursor:
+                cursor = sqlConnection.cursor()
+                cursor.execute(statement, data)
+                sqlConnection.commit()
+                cursor.close()
+        
                 status = 200
                 responseDict['Success'] = True
         else:
             status = 404
-
+    
         sqlConnection.close()
         self.send_response(status)
         self.end_headers()
@@ -116,7 +121,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
 
 def main():
-    port = 4022
+    port = 4023
     # Create an http server using the class and port you defined
     httpServer = http.server.HTTPServer(('', port), SimpleHTTPRequestHandler)
     print("Running on port", port)
