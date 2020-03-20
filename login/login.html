@@ -13,16 +13,10 @@
                 alert("You need to enter a username and password");
                 return;
             }
-            var seperationOfConcern = "demand";
-            if (window.location.href.indexOf("supply") != -1) {
-                seperationOfConcern = "supply";
-            }
             const login = {
-                "cloud": seperationOfConcern,
                 "username": username,
                 "password": password
             };
-            console.log(login);
             sessionStorage.setItem('username', username);
 
             const payload = {
@@ -34,6 +28,10 @@
                 body: JSON.stringify(login)
             }
             console.log(payload);
+            var seperationOfConcern = "demand";
+            if (window.location.href.indexOf("supply") != -1) {
+                seperationOfConcern = "supply";
+            }
             var url = `https://${seperationOfConcern}.team22.softwareengineeringii.com/loginHandler`;
 
             fetch(url, payload).then(function(response) {
