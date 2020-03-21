@@ -2,7 +2,7 @@ import http.server
 from http.server import BaseHTTPRequestHandler
 import json
 import mysql.connector as sqldb
-
+import bcrypt
 
 def connectToSQLDB(myDB):
     str = f'team22{myDB}'
@@ -11,7 +11,7 @@ def connectToSQLDB(myDB):
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
-    ver = '0.1.1'
+    ver = '0.2.0'
     
     # How to convert the body from a string to a dictionary
     # use 'loads' to convert from byte/string to a dictionary!
@@ -42,64 +42,67 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             print(dictionary)
             username = dictionary['username']
             password = dictionary['password']
-        
+
             statement = f'SELECT username, password FROM {cloud["table"]}'
             sqlConnection = connectToSQLDB(cloud['name'])
-            # with sqlConnection.cursor() as cursor:
             cursor = sqlConnection.cursor()
             cursor.execute(statement)
             rows = cursor.fetchall()
             usernameList = [x[0] for x in rows]
             passwordList = [x[1] for x in rows]
             cursor.close()
-            # Make a dictionary from the usernameList and passwordList where the key:value pairs
-            # are username:password
+
+            # Make a dictionary from the usernameList and passwordList where
+            # key:value ==> username:password
             userpass = dict(zip(usernameList, passwordList))
-        
-            if username in userpass and userpass[username] == password:
+
+            if username in userpass.keys() and bcrypt.checkpw(password, userpass[username]):
                 status = 200
-                responseDict['Success'] = True
-        
+
             # We'll send a 401 code back to the client if the user hasn't registered in our database
             else:
                 status = 401
+                responseDict['Reason'] = 'Credentials do no exist in the database'
         
         # If we are receiving a request to register an account
         elif '/registerHandler' in path:
             print(dictionary)
             username = dictionary['username']
-            password = dictionary['password']
+            password = b"dictionary['password']"
             email = dictionary['email']
             phone = dictionary['phoneNumber']
-    
-            statement = f'SELECT username, password FROM {cloud["table"]}'
+
+            statement = f'SELECT username FROM {cloud["table"]}'
             sqlConnection = connectToSQLDB(cloud['name'])
-            # with sqlConnection.cursor() as cursor:
             cursor = sqlConnection.cursor()
             cursor.execute(statement)
             rows = cursor.fetchall()
-            usernameList = [x[~0] for x in rows]
+            usernameList = [x[0] for x in rows]
             cursor.close()
     
             # The equivalent of arr.contains(e)
             if username in usernameList:
                 status = 401
+                responseDict['Reason'] = 'Username already exists'
     
             else:
                 print(username)
                 print(password)
+    
+                hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
                 statement = f'INSERT INTO {cloud["table"]} (username, password, email, phone) VALUES (%s, %s, %s, %s)'
-                data = (username, password, email, phone)
+                data = (username, hashedPassword, email, phone)
                 # with sqlConnection.cursor() as cursor:
                 cursor = sqlConnection.cursor()
                 cursor.execute(statement, data)
                 sqlConnection.commit()
                 cursor.close()
-        
+    
                 status = 200
-                responseDict['Success'] = True
+
         else:
             status = 404
+            responseDict['Reason'] = 'Endpoint doesn\'t exists'
     
         sqlConnection.close()
         self.send_response(status)
