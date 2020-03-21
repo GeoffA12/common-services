@@ -6,6 +6,7 @@
 ## What to Expect
 This repository will compose of the common service HTML files, the index, login and register pages. 
 TESTING
+Another change 
  
 ## Feature Set
 As the HTML filenames may imply, it is our landing page which will allow our users to redirect either a log in or register page
