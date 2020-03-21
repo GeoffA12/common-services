@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Cookies</title>
+    <script>
+        function alertCookie() {
+            alert(document.cookie);
+            cookie = document.cookie;
+            test = cookie.split(';');
+
+            console(test);
+            cookieDict = {}
+            test.forEach(function(e) {
+                aux = e.split('=');
+                cookieDict[aux[0].trim()] = aux[1].trim();
+            })
+
+            Object.keys(cookieDict).forEach(e => console.log(e, '=>', cookieDict[e]));
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="alertCookie()">Check Cookie!</button>
+    
+</body>
+
+</html>
