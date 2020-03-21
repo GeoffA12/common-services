@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <title>Cookies</title>
     <script>
-        function alertCookie() {
+        let alertCookie = () => {
             alert(document.cookie);
             cookie = document.cookie;
             test = cookie.split(';');
 
-            console(test);
+            console.log(test);
             cookieDict = {}
-            test.forEach(function(e) {
+            test.forEach(e => {
                 aux = e.split('=');
                 cookieDict[aux[0].trim()] = aux[1].trim();
             })
