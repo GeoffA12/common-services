@@ -27,7 +27,9 @@ form {
 }
 
 input {
-  border: none;
+  /* border: none; */
+  border-width: 1px;
+  border-color: #D5D3CF;
   border-radius: 4px;
   background-color: #D5D3CF;
 
@@ -53,7 +55,6 @@ button:focus {
 }
 
 button:before {
-    content: "";
     display: block;
     position: absolute;
     background: none;
@@ -67,7 +68,6 @@ button:before {
 }
 
 button:after{
-    content: "";
     display: block;
     position: absolute;
     background: none;
