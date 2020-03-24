@@ -1,45 +1,26 @@
 body,
 html {
+    scroll-behavior: smooth;
     height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     background-color: #E1DFDB;
     font-size: 16px;
     font-family: Rubik;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
-body {
-    min-height: 100%;
-}
-
-.cHeader {
-    text-align: center;
-}
-
-.serviceDesc {
-    max-height: 100px;
-}
-
-form {
-    text-align: left;
-    display: table;
-}
-
-input {
-  /* border: none; */
-  border-width: 1px;
-  border-color: #D5D3CF;
-  border-radius: 4px;
-  background-color: #D5D3CF;
-
+#appHeader,
+footer {
+    background-color: #17A2B8;
+    width: 100vw;
 }
 
 button {
     background: none;
     color: #2A2728;
-    width: 240px;
-    height: 80px;
     border: 1px solid #2A2728;
     font-size: 18px;
     font-family: Rubik;
@@ -47,7 +28,6 @@ button {
     transition: 0.6s;
     overflow: hidden;
     cursor: pointer;
-    margin: 10px;
 }
 
 button:focus {
