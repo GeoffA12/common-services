@@ -41,7 +41,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         if '/loginHandler' in path:
             print(dictionary)
             username = dictionary['username']
-            password = dictionary['password']
+            password = dictionary['password'].encode()
+            print(username)
+            print(password)
 
             statement = f'SELECT username, password FROM {cloud["table"]}'
             sqlConnection = connectToSQLDB(cloud['name'])
@@ -56,7 +58,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             # key:value ==> username:password
             userpass = dict(zip(usernameList, passwordList))
 
-            if username in userpass.keys() and bcrypt.checkpw(password, userpass[username]):
+            if username in userpass.keys() and bcrypt.checkpw(password, userpass[username].encode()):
                 status = 200
 
             # We'll send a 401 code back to the client if the user hasn't registered in our database
@@ -68,7 +70,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         elif '/registerHandler' in path:
             print(dictionary)
             username = dictionary['username']
-            password = b"dictionary['password']"
+            password = dictionary['password'].encode()
             email = dictionary['email']
             phone = dictionary['phoneNumber']
 
