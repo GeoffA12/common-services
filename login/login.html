@@ -21,7 +21,7 @@
 		        "cloud": urlPrefix
             };
             sessionStorage.setItem('username', username);
-            
+
             const payload = {
                 method: 'POST',
                 headers: {
@@ -30,12 +30,11 @@
                 mode: 'no-cors',
                 body: JSON.stringify(login)
             }
-            console.log(payload);
-          
+            // console.log(payload);
             var url = `https://${urlPrefix}.team22.softwareengineeringii.com/loginHandler`;
 
             fetch(url, payload).then(function(response) {
-                console.log(response.status);
+                // console.log(response.status);
                 response.json().then(function(parseJSON) {
                     if (response.status == 200) {
                         url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`
@@ -115,27 +114,27 @@
               <form>
                 <div class="form-group input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                  <input class="form-control" type="text" name='username' id='user_name' placeholder="Username"/>          
+                  <input class="form-control" type="text" id="user_name" placeholder="Username"/>          
                 </div>
                 <div class="form-group input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                  <input class="form-control" type="password" name='password' id='user_password'placeholder="Password"/>     
+                  <span ><i class="glyphicon glyphicon-lock"></i></span>
+                  <input class="form-control" type="password" id="user_password" placeholder="Password"/>     
                 </div>
                 <div class="row checkbox justify-content-center">
                   <label>
                     <input type="checkbox"> I agree to the <a href="#">Terms and Conditions</a>
                   </label>
                 </div>
-                <div class="row form-group">
-                  <button onclick="sendPostRequest()" class="btn-block">Login</button>
-                </div>
                 <div class="form-group text-center">
                   <a href="#">Forgot Password</a>&nbsp;|&nbsp;<a href="#">Support</a>
                 </div>
+              </form> 
+                <div class="row justify-content-center">
+                  <button onclick="sendPostRequest()">Login</button>
+                </div>
                 <div class="row form-group justify-content-center">
                     <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                </div>
-              </form>        
+                </div>       
             </div>  
           </div>    
         </div>
