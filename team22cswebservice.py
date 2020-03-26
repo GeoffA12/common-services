@@ -41,6 +41,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             cloud['name'] = 'supply'
             cloud['table'] = 'fleetmanagers'
 
+        sqlConnection = connectToSQLDB(cloud['name'])
+        cursor = sqlConnection.cursor()
+
         if '/loginHandler' in path:
             status = 401
             username = dictionary['username']
@@ -49,14 +52,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             print(password)
     
             statement = f'SELECT email, username, password FROM {cloud["table"]}'
-            sqlConnection = connectToSQLDB(cloud['name'])
-            cursor = sqlConnection.cursor()
             cursor.execute(statement)
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
             usernameList = [x[1] for x in rows]
             passwordList = [x[2] for x in rows]
-            cursor.close()
     
             compositeIndetifiers = zip(emailList, usernameList)
             if any(username in x for x in compositeIndetifiers):
@@ -77,8 +77,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             password = dictionary['password'].encode()
     
             statement = f'SELECT email FROM {cloud["table"]}'
-            sqlConnection = connectToSQLDB(cloud['name'])
-            cursor = sqlConnection.cursor()
             cursor.execute(statement)
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
@@ -92,7 +90,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         
                 statement = f'''SELECT username FROM {cloud['table']}
                             WHERE username = %s OR username LIKE %s'''
-                # cursor = sqlConnection.cursor()
                 cursor.execute(statement, (username, username + '-%',));
                 similarUsernames = cursor.fetchone()
                 if similarUsernames is not None:
@@ -106,13 +103,12 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                             VALUES (%s, %s, %s, %s, %s, %s)'''
                 data = (firstname, lastname, username, hashedPassword, email, phone)
                 # with sqlConnection.cursor() as cursor:
-                cursor = sqlConnection.cursor()
                 cursor.execute(statement, data)
                 sqlConnection.commit()
-                cursor.close()
         
                 status = 200
 
+        cursor.close()
         sqlConnection.close()
         self.send_response(status)
         self.end_headers()
