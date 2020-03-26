@@ -82,7 +82,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             cursor.execute(statement)
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
-            cursor.close()
     
             if email not in emailList:
                 print(email)
@@ -93,10 +92,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         
                 statement = f'''SELECT username FROM {cloud['table']}
                             WHERE username = %s OR username LIKE %s'''
-                cursor = sqlConnection.cursor()
+                # cursor = sqlConnection.cursor()
                 cursor.execute(statement, (username, username + '-%',));
                 similarUsernames = cursor.fetchone()
-                # cursor.close()
                 if similarUsernames is not None:
                     checker = [x[0] for x in similarUsernames]
                     while username in checker:
