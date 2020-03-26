@@ -14,87 +14,35 @@ html {
 
 #appHeader,
 footer {
-    background-color: #17A2B8;
+    background-color: #E1DFDB;
     width: 100vw;
+    padding: 0 5vw 0 5vw;
 }
+
+#appHeader {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+header button {
+    width: 100px;
+}
+
+header a {
+    color: black;
+}
+
+.op {
+    color: #E1DFDB;
+    background-color: rgb(111, 64, 187);
+}
+
 
 button {
     background: none;
     color: #2A2728;
-    border: 1px solid #2A2728;
-    font-size: 18px;
+    border: 0px solid #2A2728;
     font-family: Rubik;
-    border-radius: 4px;
-    transition: 0.6s;
     overflow: hidden;
     cursor: pointer;
 }
-
-button:focus {
-    outline: none;
-}
-
-button:before {
-    display: block;
-    position: absolute;
-    background: none;
-    width: 60px;
-    height: 100%;
-    left: 0;
-    top: 0;
-    opacity: 0.5s;
-    filter: blue(30px);
-    transform: translateX(-130px) skewY(-15deg);
-}
-
-button:after{
-    display: block;
-    position: absolute;
-    background: none;
-    width: 30px;
-    height: 100%;
-    left: 30px;
-    top: 0;
-    opacity: 0;
-    filter: blur(30px);
-    transform: translateX(-100px) skewY(-15deg);
-}
-
-button:hover {
-    background: #17A2B8;
-}
-
-button:hover:before {
-    transform: translateX(300px) skewY(-15deg);
-    opacity: 0.6;
-    transition: 0.7s;
-}
-
-button:hover:after {
-    transform: translateX(300px) skewY(-15deg);
-    opacity: 1;
-    transition: 0.7s;
-}
-
-.imgHeader {
-    text-align: center;
-    padding: 50%;
-}
-
-img {
-    height: 100px;
-}
-
-.rounded-circle {
-    background-color: #17A2B8;
-}
-
-/* Sets the margin to $spacer * 1.5- used to make app backgrounds circular */
-/* .m-4 {
-    margin: $spacer !important;
-} */
-
-/* Sets the padding to $spacer * 3- also used to make app backgrounds circular */
-/* .p-5 {
-    padding: $spacer !important;
-} */
