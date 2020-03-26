@@ -1,4 +1,4 @@
-let sendRegisrationForm = () => {
+let sendRegistrationForm = () => {
     let firstName = document.getElementById('firstname').value;
     let lastName = document.getElementById('lastname').value;
     let phoneNumber = document.getElementById('phonenumber').value; 

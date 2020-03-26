@@ -1,4 +1,4 @@
-let sendPostRequest = () => {
+let sendLoginForm = () => {
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
     var urlPrefix = (window.location.href.includes("demand")) ? "demand" : "supply";
