@@ -2,6 +2,7 @@ import http.server
 from http.server import BaseHTTPRequestHandler
 import json
 import mysql.connector as sqldb
+from random import randint
 import bcrypt
 
 def connectToSQLDB(myDB):
@@ -64,36 +65,50 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             # We'll send a 401 code back to the client if the user hasn't registered in our database
             else:
                 status = 401
-                responseDict['Reason'] = 'Credentials do no exist in the database'
         
         # If we are receiving a request to register an account
         elif '/registerHandler' in path:
             print(dictionary)
-            username = dictionary['username']
-            password = dictionary['password'].encode()
-            email = dictionary['email']
+            firstname = dictionary['firstname']
+            lastname = dictionary['lastname']
             phone = dictionary['phoneNumber']
-
-            statement = f'SELECT username FROM {cloud["table"]}'
+            email = dictionary['email']
+            password = dictionary['password'].encode()
+    
+            statement = f'SELECT email FROM {cloud["table"]}'
             sqlConnection = connectToSQLDB(cloud['name'])
             cursor = sqlConnection.cursor()
             cursor.execute(statement)
             rows = cursor.fetchall()
-            usernameList = [x[0] for x in rows]
+            emailList = [x[0] for x in rows]
             cursor.close()
     
             # The equivalent of arr.contains(e)
-            if username in usernameList:
+            if email in emailList:
                 status = 401
-                responseDict['Reason'] = 'Username already exists'
     
             else:
-                print(username)
+                print(email)
                 print(password)
     
+                username = email[:email.rindex('@')]
+                usernameLen = len(username)
+    
+                statement = f'''SELECT username FROM {cloud['table']}
+                            WHERE username = %s OR username LIKE %s-%'''
+                cursor = sqlConnection.cursor()
+                cursor.execute(statement, (username, username,));
+                similarUsernames = cursor.fetchone()
+                cursor.close()
+                checker = [x[0] for x in similarUsernames]
+                while username in checker:
+                    username = f'{username[:usernameLen]}-{randint(0, 1_000_000)}'
+    
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
-                statement = f'INSERT INTO {cloud["table"]} (username, password, email, phone) VALUES (%s, %s, %s, %s)'
-                data = (username, hashedPassword, email, phone)
+                statement = f'''INSERT INTO {cloud["table"]}
+                            (firstname, lastname, username, password, email, phone)
+                            VALUES (%s, %s, %s, %s)'''
+                data = (firstname, lastname, username, hashedPassword, email, phone)
                 # with sqlConnection.cursor() as cursor:
                 cursor = sqlConnection.cursor()
                 cursor.execute(statement, data)
@@ -104,7 +119,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         else:
             status = 404
-            responseDict['Reason'] = 'Endpoint doesn\'t exists'
     
         sqlConnection.close()
         self.send_response(status)
