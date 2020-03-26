@@ -1,53 +1,11 @@
 <!doctype html>
 <html lang="en">
-
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <script>
-        let sendPostRequest = () => {
-            let username = document.getElementById("user_name").value;
-            let password = document.getElementById("user_password").value;
-            if (username.length == 0 || password.length == 0) {
-                alert("You need to enter a username and password");
-                return;
-            }
-            var urlPrefix = (window.location.href.includes("demand")) ? "demand" : "supply";
-            const login = {
-                "username": username,
-                "password": password,
-		        "cloud": urlPrefix
-            };
-            sessionStorage.setItem('username', username);
-
-            const payload = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                mode: 'no-cors',
-                body: JSON.stringify(login)
-            }
-            // console.log(payload);
-            var url = `https://${urlPrefix}.team22.softwareengineeringii.com/loginHandler`;
-
-            fetch(url, payload).then(function(response) {
-                // console.log(response.status);
-                response.json().then(function(parseJSON) {
-                    if (response.status == 200) {
-                        url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`
-                        window.location.assign(url);
-                    } else {
-                        alert("Invalid credentials");
-                    }
-                })
-            }).catch(function(error) {
-                console.error(error)
-            });
-        }
-    </script>
+    <meta name="google-signin-client_id" content="562601301105-t3d4socjlrl952tku6g03qsujcafa9q3.apps.googleusercontent.com">
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -56,14 +14,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    
     <!-- Site wide and page specific Styles -->
     <link rel="stylesheet" href="/common-services/styling/style.css" media="screen">
-
-    <meta name="google-signin-client_id" content="562601301105-t3d4socjlrl952tku6g03qsujcafa9q3.apps.googleusercontent.com">
-
+    <link rel="stylesheet" href="/common-services/styling/login.css" media="screen">
+    
+    <!-- Google API -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-
+    
     <script>
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
@@ -74,35 +32,21 @@
         }
         // CID 562601301105-t3d4socjlrl952tku6g03qsujcafa9q3.apps.googleusercontent.com
         // SK M2ocKs1QJERKhq8Jaa_yX5_O
-    </script>
+        </script>
+    <script src="/common-services/js/sendLogin.js"></script>
     <title>WeGo Login</title>
-
-    <style>
-        .Absolute-Center {
-            margin: auto;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-        }
     
-        .Absolute-Center.is-Responsive {
-            width: 50%;
-            height: 50%;
-            min-width: 200px;
-            max-width: 400px;
-        }
-    </style>
-
 </head>
 
 <body>
-    <nav id="appHeader" class="navbar fixed-top justify-content-between shadow-sm py-3">
+    <nav id="appHeader" class="navbar fixed-top justify-content-between shadow py-3">
         <div>
             <a class="navbar-brand" style="cursor: pointer;">
                 WeGo Services
             </a>
+        </div>
+        <div>
+            <button id="signupButton" class="op" onclick="goToRegister()">Sign Up</button>
         </div>
     </nav>
 
@@ -110,38 +54,43 @@
     <div class="container">
         <div class="row">
           <div class="Absolute-Center is-Responsive">
-            <div class="col">
-              <form>
-                <div class="form-group input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                  <input class="form-control" type="text" id="user_name" placeholder="Username"/>          
+                <div class="registerContainer">
+                    <h3 style="font-weight: bold;">Log In To WeGo Services</h3>
+                    <form>
+                        <div class="form-group input-group">
+                            <label for="user_name">Username or Email</label>
+                            <div class="input-group">
+                                <input class="" required type="text" id="username"/>          
+                            </div>
+                        </div>
+                        <div class="form-group input-group">
+                            <label for="user_password">Password</label>
+                            <div class="input-group">
+                                <input class="" required type="password" id="password"/>     
+                            </div>
+                        </div>
+                        <p id="loginError" style="color: red; font-weight: bold;"></p>
+                        <div class="form-group">
+                            <a href="#">Forgot Password</a>
+                        </div>
+                    </form> 
+                    <div class="form-group input-group">
+                        <button onclick="sendPostRequest()" class="btn-block op" style="height: 50px; font-weight: bolder;">Log In</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="socialLogins">Log In With Another Account</label>
+                        <div id="socialLogins" class="form-group">
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                            <p style="width: 100%; text-align: right;"><a href="">Not a member yet? Sign up for free</a></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group input-group">
-                  <span ><i class="glyphicon glyphicon-lock"></i></span>
-                  <input class="form-control" type="password" id="user_password" placeholder="Password"/>     
-                </div>
-                <div class="row checkbox justify-content-center">
-                  <label>
-                    <input type="checkbox"> I agree to the <a href="#">Terms and Conditions</a>
-                  </label>
-                </div>
-                <div class="form-group text-center">
-                  <a href="#">Forgot Password</a>&nbsp;|&nbsp;<a href="#">Support</a>
-                </div>
-              </form> 
-                <div class="row justify-content-center">
-                  <button onclick="sendPostRequest()">Login</button>
-                </div>
-                <div class="row form-group justify-content-center">
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                </div>       
-            </div>  
           </div>    
         </div>
       </div>
 
-    <footer class="page-footer fixed-bottom font-small blue-grey lighten-5">
-        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <footer class="page-footer fixed-bottom font-small lighten-5 shadow-lg">
+        <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
             <a class="dark-grey-text" href="https://mdbootstrap.com/"> MDBootstrap.com</a>
         </div>
     </footer>
