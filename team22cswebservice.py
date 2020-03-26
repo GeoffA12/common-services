@@ -23,9 +23,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         return json.loads(body)
     
     def do_POST(self):
+        status = 404
         path = self.path
         print(path)
-        responseDict = {}
         dictionary = self.getPOSTBody()
         print(dictionary)
         myCloud = dictionary.pop('cloud')
@@ -41,41 +41,40 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             cloud['table'] = 'fleetmanagers'
 
         if '/loginHandler' in path:
-            print(dictionary)
+            status = 401
             username = dictionary['username']
             password = dictionary['password'].encode()
             print(username)
             print(password)
-
-            statement = f'SELECT username, password FROM {cloud["table"]}'
+    
+            statement = f'SELECT email, username, password FROM {cloud["table"]}'
             sqlConnection = connectToSQLDB(cloud['name'])
             cursor = sqlConnection.cursor()
             cursor.execute(statement)
             rows = cursor.fetchall()
-            usernameList = [x[0] for x in rows]
-            passwordList = [x[1] for x in rows]
+            emailList = [x[0] for x in rows]
+            usernameList = [x[1] for x in rows]
+            passwordList = [x[2] for x in rows]
             cursor.close()
+    
+            compositeIndetifiers = zip(emailList, usernameList)
+            if any(username in x for x in compositeIndetifiers):
+                dictEmailKey = dict(zip(emailList, passwordList))
+                dictUsernameKey = dict(zip(usernameList, passwordList))
+                if bcrypt.checkpw(password, dictEmailKey[username].encode()) or \
+                        bcrypt.checkpw(password, dictUsernameKey[username].encode()):
+                    status = 200
 
-            # Make a dictionary from the usernameList and passwordList where
-            # key:value ==> username:password
-            userpass = dict(zip(usernameList, passwordList))
 
-            if username in userpass.keys() and bcrypt.checkpw(password, userpass[username].encode()):
-                status = 200
-
-            # We'll send a 401 code back to the client if the user hasn't registered in our database
-            else:
-                status = 401
-        
         # If we are receiving a request to register an account
         elif '/registerHandler' in path:
-            print(dictionary)
+            status = 401
             firstname = dictionary['firstname']
             lastname = dictionary['lastname']
             phone = dictionary['phoneNumber']
             email = dictionary['email']
             password = dictionary['password'].encode()
-
+    
             statement = f'SELECT email FROM {cloud["table"]}'
             sqlConnection = connectToSQLDB(cloud['name'])
             cursor = sqlConnection.cursor()
@@ -83,18 +82,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
             cursor.close()
-
-            # The equivalent of arr.contains(e)
-            if email in emailList:
-                status = 401
-
-            else:
+    
+            if email not in emailList:
                 print(email)
                 print(password)
-
+        
                 username = email[:email.rindex('@')]
                 usernameLen = len(username)
-
+        
                 statement = f'''SELECT username FROM {cloud['table']}
                             WHERE username = %s OR username LIKE %s'''
                 cursor = sqlConnection.cursor()
@@ -105,7 +100,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                     checker = [x[0] for x in similarUsernames]
                     while username in checker:
                         username = f'{username[:usernameLen]}-{randint(0, 1_000_000)}'
-
+        
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
                 statement = f'''INSERT INTO {cloud["table"]}
                             (firstname, lastname, username, password, email, phone)
@@ -116,11 +111,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 cursor.execute(statement, data)
                 sqlConnection.commit()
                 cursor.close()
-
+        
                 status = 200
-
-        else:
-            status = 404
 
         sqlConnection.close()
         self.send_response(status)
