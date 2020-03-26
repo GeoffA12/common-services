@@ -96,9 +96,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 usernameLen = len(username)
 
                 statement = f'''SELECT username FROM {cloud['table']}
-                            WHERE username = %s OR username LIKE %s%'''
+                            WHERE username = %s OR username LIKE %s'''
                 cursor = sqlConnection.cursor()
-                cursor.execute(statement, (username, username + '-',));
+                cursor.execute(statement, (username, username + '-%',));
                 similarUsernames = cursor.fetchone()
                 cursor.close()
                 checker = [x[0] for x in similarUsernames]
