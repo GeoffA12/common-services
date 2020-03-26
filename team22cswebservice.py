@@ -101,9 +101,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 cursor.execute(statement, (username, username + '-%',));
                 similarUsernames = cursor.fetchone()
                 cursor.close()
-                checker = [x[0] for x in similarUsernames]
-                while username in checker:
-                    username = f'{username[:usernameLen]}-{randint(0, 1_000_000)}'
+                if similarUsernames is not None:
+                    checker = [x[0] for x in similarUsernames]
+                    while username in checker:
+                        username = f'{username[:usernameLen]}-{randint(0, 1_000_000)}'
 
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
                 statement = f'''INSERT INTO {cloud["table"]}
