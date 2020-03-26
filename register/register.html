@@ -69,67 +69,22 @@
 </head>
 
 <body>
-    <div class="cHeader container-fluid bg-info">
-        <h1>WeGo Services</h1>
-        <br>
-        <h4>Autonomous Delivery & Logistics Services</h4>
-        <br><br>
-    </div>
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="imgHeader rounded-circle m-4 p-5">
-                <img src="../images/note.png">
-            </div>
-
-            <div class="imgHeader rounded-circle m-4 p-5">
-                <img src="../images/disco-ball.png">
-            </div>
-
-            <div class="imgHeader rounded-circle m-4 p-5">
-                <img src="../images/washer.png">
-            </div>
-
-            <div class="imgHeader rounded-circle m-4 p-5">
-                <img src="../images/coffee-machine.png">
-            </div>
+    <nav id="appHeader" class="navbar fixed-top justify-content-between shadow py-3">
+        <div>
+            <a class="navbar-brand" style="cursor: pointer;">
+                WeGo Services
+            </a>
         </div>
-    </div>
+        <div>
+            <button id="loginButton" onclick="goToLogin()">Log in</button>
+        </div>
+    </nav>
 
-    <br>
-    <div class="container" style="text-align: center">
-        <h4 style="text-align: center">Register</h4>
-        <form class="row justify-content-center">
-            <div class="w-100"></div>
-            <table>
-                <tr>
-                    <td>
-                        <span>E-mail:</span><br>
-                        <input type="email" id="email">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span>Username:</span><br>
-                        <input type="text" id="username">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span>Password:</span><br>
-                        <input type="password" id="password">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span>Phone Number:</span><br>
-                        <input type="text" id="phoneNum">
-                    </td>
-                </tr>
-            </table>
-        </form>
-        <button onclick="sendRegisrationForm()">Create Account</button>
-    </div>
+    <footer class="page-footer fixed-bottom font-small lighten-5 shadow-lg">
+        <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
+            <a class="dark-grey-text" href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+        </div>
+    </footer>
 </body>
 
 </html>
