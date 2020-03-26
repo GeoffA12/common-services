@@ -107,7 +107,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
                 statement = f'''INSERT INTO {cloud["table"]}
                             (firstname, lastname, username, password, email, phone)
-                            VALUES (%s, %s, %s, %s)'''
+                            VALUES (%s, %s, %s, %s, %s, %s, %s)'''
                 data = (firstname, lastname, username, hashedPassword, email, phone)
                 # with sqlConnection.cursor() as cursor:
                 cursor = sqlConnection.cursor()
