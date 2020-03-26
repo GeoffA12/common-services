@@ -96,7 +96,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 cursor = sqlConnection.cursor()
                 cursor.execute(statement, (username, username + '-%',));
                 similarUsernames = cursor.fetchone()
-                cursor.close()
+                # cursor.close()
                 if similarUsernames is not None:
                     checker = [x[0] for x in similarUsernames]
                     while username in checker:
