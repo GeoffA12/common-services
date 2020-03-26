@@ -24,6 +24,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     
     def do_POST(self):
         status = 404
+        responseBody = {}
         path = self.path
         print(path)
         dictionary = self.getPOSTBody()
@@ -117,7 +118,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         sqlConnection.close()
         self.send_response(status)
         self.end_headers()
-        res = json.dumps(responseDict)
+        res = json.dumps(responseBody)
         bytesStr = res.encode('utf-8')
         self.wfile.write(bytesStr)
     
