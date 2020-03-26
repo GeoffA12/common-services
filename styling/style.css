@@ -7,7 +7,7 @@ html {
     padding: 0;
     background-color: #E1DFDB;
     font-size: 16px;
-    font-family: Rubik;
+    font-family: Ubuntu;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -42,7 +42,6 @@ button {
     background: none;
     color: #2A2728;
     border: 0px solid #2A2728;
-    font-family: Rubik;
     overflow: hidden;
     cursor: pointer;
 }
