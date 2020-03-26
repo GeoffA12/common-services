@@ -5,10 +5,11 @@ import mysql.connector as sqldb
 from random import randint
 import bcrypt
 
+
 def connectToSQLDB(myDB):
     str = f'team22{myDB}'
     print(str)
-    return sqldb.connect(user = 'root', password = 'password', database = f'team22{myDB}', port = 6022)
+    return sqldb.connect(user='root', password='password', database=f'team22{myDB}', port=6022)
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -38,7 +39,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         if isSupply:
             cloud['name'] = 'supply'
             cloud['table'] = 'fleetmanagers'
-    
+
         if '/loginHandler' in path:
             print(dictionary)
             username = dictionary['username']
@@ -74,7 +75,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             phone = dictionary['phoneNumber']
             email = dictionary['email']
             password = dictionary['password'].encode()
-    
+
             statement = f'SELECT email FROM {cloud["table"]}'
             sqlConnection = connectToSQLDB(cloud['name'])
             cursor = sqlConnection.cursor()
@@ -82,28 +83,28 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
             cursor.close()
-    
+
             # The equivalent of arr.contains(e)
             if email in emailList:
                 status = 401
-    
+
             else:
                 print(email)
                 print(password)
-    
+
                 username = email[:email.rindex('@')]
                 usernameLen = len(username)
-    
+
                 statement = f'''SELECT username FROM {cloud['table']}
-                            WHERE username = %s OR username LIKE %s-%'''
+                            WHERE username = %s OR username LIKE %s%'''
                 cursor = sqlConnection.cursor()
-                cursor.execute(statement, (username, username,));
+                cursor.execute(statement, (username, username + '-',));
                 similarUsernames = cursor.fetchone()
                 cursor.close()
                 checker = [x[0] for x in similarUsernames]
                 while username in checker:
                     username = f'{username[:usernameLen]}-{randint(0, 1_000_000)}'
-    
+
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
                 statement = f'''INSERT INTO {cloud["table"]}
                             (firstname, lastname, username, password, email, phone)
@@ -114,12 +115,12 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 cursor.execute(statement, data)
                 sqlConnection.commit()
                 cursor.close()
-    
+
                 status = 200
 
         else:
             status = 404
-    
+
         sqlConnection.close()
         self.send_response(status)
         self.end_headers()

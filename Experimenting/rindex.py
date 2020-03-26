@@ -3,3 +3,5 @@ username = email[: email.rindex('@')]
 
 print(email)
 print(username)
+
+print(username + '-')
