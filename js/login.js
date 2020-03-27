@@ -35,9 +35,10 @@ $('#loginForm').submit(async e => {
     console.log(result);
 
     if (response.status == 200) {
-        alert('hi');
+        url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`
+        window.location.assign(url);
     } else {
-        alert('no');    
+        document.getElementById('error').innerHTML = 'Invalid login or password'
     }
 })
 // let sendLoginForm = () => {
