@@ -26,7 +26,6 @@
     
     <!-- Page specific Scripts -->
     <script src="/common-services/js/redirect.js"></script>
-    <script src="/common-services/js/sendRegister.js"></script>
     
     <!-- Page specific Styles -->
     <link rel="stylesheet" href="/common-services/styling/register.css" media="screen">
@@ -58,10 +57,10 @@
 
     <div class="container">
         <div class="row">
-          <div class="Absolute-Center is-Responsive">
+            <div class="Absolute-Center is-Responsive">
                 <div class="registerContainer">
                     <h3 style="font-weight: bold;">Join WeGo Services</h3>
-                    <form>
+                    <form id="registerForm">
                         <div class="form-group input-group">
                             <div style="width: 45%; margin-right: 5%;">
                                 <label for="firstname">First Name (required) </label>
@@ -94,10 +93,8 @@
                                 <input required type="password" id="password" placeholder="Password"/>     
                             </div>
                         </div>
+                        <button type="submit" class="btn-block op" style="height: 50px; font-weight: bolder;">Start Now</button>
                     </form> 
-                    <div class="form-group input-group">
-                        <button onclick="sendRegistrationForm()" class="btn-block op" style="height: 50px; font-weight: bolder;">Start Now</button>
-                    </div>
                     <div class="form-group">
                         <label for="socialLogins">Try with a social</label>
                         <div id="socialLogins" class="form-group">
@@ -105,9 +102,11 @@
                         </div>
                     </div>
                 </div>
-          </div>    
+            </div>    
         </div>
-      </div>
+    </div>
+
+    <script src="/common-services/js/register.js"></script>
 
     <footer class="page-footer fixed-bottom font-small lighten-5 shadow-lg">
         <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
