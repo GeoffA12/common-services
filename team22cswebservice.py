@@ -72,7 +72,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             status = 401
             firstname = dictionary['firstname']
             lastname = dictionary['lastname']
-            phone = dictionary['phoneNumber']
+            phone = dictionary['phonenumber']
             email = dictionary['email']
             password = dictionary['password'].encode()
     
