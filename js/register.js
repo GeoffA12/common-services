@@ -26,6 +26,7 @@ $('#registerForm').submit(async e => {
         body: JSON.stringify(register)
     }).then(res => {
         if (res.status == 200) {
+            localStorage.setItem('username', register['email'])
             url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`;
             window.location.assign(url);
         } else {
