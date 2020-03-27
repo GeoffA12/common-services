@@ -26,6 +26,7 @@ $('#loginForm').submit(async e => {
         body: JSON.stringify(login)
     }).then(res => {
         if (res.status == 200) {
+            localStorage.setItem('username', login['username'])
             url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`;
             window.location.assign(url);
         } else {
