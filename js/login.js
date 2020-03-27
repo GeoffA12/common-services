@@ -19,27 +19,25 @@ $('#loginForm').submit(async e => {
     })
     console.log(login)
 
-    let response = await fetch(url, {
+    await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         mode: 'no-cors',
         body: JSON.stringify(login)
+    }).then(res => {
+        if (res.status == 200) {
+            url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`
+            window.location.assign(url);
+        } else {
+            document.getElementById('error').innerHTML = 'Invalid login or password'
+        }
+    }).catch(err => {
+        console.log('Error: ', err);
     });
 
-    console.log(response);
 
-    let result = await response.json()
-
-    console.log(result);
-
-    if (response.status == 200) {
-        url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`
-        window.location.assign(url);
-    } else {
-        document.getElementById('error').innerHTML = 'Invalid login or password'
-    }
 })
 // let sendLoginForm = () => {
 //     let username = document.getElementById("username").value;
