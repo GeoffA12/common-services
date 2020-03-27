@@ -3,13 +3,12 @@ $('#loginForm').submit(async e => {
 
     var urlPrefix = (window.location.href.includes("demand")) ? "demand" : "supply";
     var url = `https://${urlPrefix}.team22.softwareengineeringii.com/loginHandler`;
-    console.log(url);
+    // console.log(url);
 
     var login = {'cloud': urlPrefix}
     form = document.getElementById('loginForm');
     // console.log(form);
     inputs = form.querySelectorAll('input');
-    // console.log(form);
     // console.log(inputs);
     
     inputs.forEach((e, i) => {
@@ -27,10 +26,10 @@ $('#loginForm').submit(async e => {
         body: JSON.stringify(login)
     }).then(res => {
         if (res.status == 200) {
-            url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`
+            url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`;
             window.location.assign(url);
         } else {
-            document.getElementById('error').innerHTML = 'Invalid login or password'
+            document.getElementById('error').innerHTML = 'Invalid login or password';
         }
     }).catch(err => {
         console.log('Error: ', err);
