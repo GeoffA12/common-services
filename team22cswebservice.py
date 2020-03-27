@@ -31,17 +31,15 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         print(dictionary)
         myCloud = dictionary.pop('cloud')
         isSupply = 'supply' == myCloud
-        cloud = {
-            'name': 'demand',
-            'table': 'customers'
-            }
+        cloud = 'demand'
+        userTable = 'customers'
         print(path)
         print(isSupply)
         if isSupply:
-            cloud['name'] = 'supply'
-            cloud['table'] = 'fleetmanagers'
+            cloud = 'supply'
+            userTable = 'fleetmanagers'
 
-        sqlConnection = connectToSQLDB(cloud['name'])
+        sqlConnection = connectToSQLDB(cloud)
         cursor = sqlConnection.cursor()
 
         if '/loginHandler' in path:
@@ -51,8 +49,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             print(username)
             print(password)
     
-            statement = f'SELECT email, username, password FROM {cloud["table"]}'
-            cursor.execute(statement)
+            statement = 'SELECT email, username, password FROM %s'
+            cursor.execute(statement, (userTable,))
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
             usernameList = [x[1] for x in rows]
@@ -76,8 +74,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             email = dictionary['email']
             password = dictionary['password'].encode()
     
-            statement = f'SELECT email FROM {cloud["table"]}'
-            cursor.execute(statement)
+            statement = 'SELECT email FROM %s'
+            cursor.execute(statement, (userTable,))
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
     
@@ -88,9 +86,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 username = email[:email.rindex('@')]
                 usernameLen = len(username)
         
-                statement = f'''SELECT username FROM {cloud['table']}
+                statement = '''SELECT username FROM %s
                             WHERE username = %s OR username LIKE %s'''
-                cursor.execute(statement, (username, username + '-%',));
+                data = (userTable, username + '-%',)
+                cursor.execute(statement, data);
                 similarUsernames = cursor.fetchone()
                 if similarUsernames is not None:
                     checker = [x[0] for x in similarUsernames]
@@ -98,11 +97,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                         username = f'{username[:usernameLen]}-{randint(0, 1_000_000)}'
         
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
-                statement = f'''INSERT INTO {cloud["table"]}
+                statement = '''INSERT INTO %s
                             (firstname, lastname, username, password, email, phone)
                             VALUES (%s, %s, %s, %s, %s, %s)'''
-                data = (firstname, lastname, username, hashedPassword, email, phone)
-                # with sqlConnection.cursor() as cursor:
+                data = (userTable, firstname, lastname, username, hashedPassword, email, phone,)
                 cursor.execute(statement, data)
                 sqlConnection.commit()
         
