@@ -26,7 +26,6 @@
     
     <!-- Page specific Scripts -->
     <script src="/common-services/js/redirect.js"></script>
-    <script src="/common-services/js/sendLogin.js"></script>
     
     <!-- Page specific Styles -->
     <link rel="stylesheet" href="/common-services/styling/login.css" media="screen">
@@ -60,30 +59,28 @@
     <!-- Credit: https://codepen.io/OldManJava/pen/bwupj -->
     <div class="container">
         <div class="row">
-          <div class="Absolute-Center is-Responsive">
+            <div class="Absolute-Center is-Responsive">
                 <div class="registerContainer">
                     <h3 style="font-weight: bold;">Log In To WeGo Services</h3>
-                    <form>
+                    <form id="loginForm">
                         <div class="form-group input-group">
                             <label for="username">Username or Email</label>
                             <div class="input-group">
-                                <input class="" required type="text" id="username" placeholder="Email or Username"/>          
+                                <input required type="text" id="username" placeholder="Email or Username"/>          
                             </div>
                         </div>
                         <div class="form-group input-group">
                             <label for="password">Password</label>
                             <div class="input-group">
-                                <input class="" required type="password" id="password" placeholder="Password"/>     
+                                <input required type="password" id="password" placeholder="Password"/>     
                             </div>
                         </div>
-                        <p id="error" class="error" style="font-weight: bold;"></p>
+                        <!-- <p id="error" class="error" style="font-weight: bold;"></p>
                         <div class="form-group">
                             <a href="#">Forgot Password</a>
-                        </div>
+                        </div> -->
+                        <button type="submit" class="btn-block op" style="height: 50px; font-weight: bolder;">Log In</button>
                     </form> 
-                    <div class="form-group input-group">
-                        <button onclick="sendLoginForm()" class="btn-block op" style="height: 50px; font-weight: bolder;">Log In</button>
-                    </div>
                     <div class="form-group">
                         <label for="socialLogins">Log In With Another Account</label>
                         <div id="socialLogins" class="form-group">
@@ -92,9 +89,11 @@
                         </div>
                     </div>
                 </div>
-          </div>    
+            </div>    
         </div>
-      </div>
+    </div>
+
+    <script src="../js/login.js"></script>
 
     <footer class="page-footer fixed-bottom font-small lighten-5 shadow-lg">
         <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
