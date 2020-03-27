@@ -7,6 +7,8 @@ $('#loginForm').submit(async e => {
 
     var login = {'cloud': urlPrefix}
     form = document.getElementById(this.id);
+    console.log(this);
+    console.log(form);
     inputs = form.querySelectorAll('input');
     // console.log(form);
     // console.log(inputs);
