@@ -45,3 +45,7 @@ button {
     overflow: hidden;
     cursor: pointer;
 }
+
+input {
+    max-width: 100%;
+}
