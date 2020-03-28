@@ -50,6 +50,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             print(password)
     
             statement = 'SELECT email, username, password FROM %s'
+            print(userTable)
             cursor.execute(statement, (userTable,))
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
