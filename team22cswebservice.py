@@ -49,9 +49,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             print(username)
             print(password)
     
-            statement = 'SELECT email, username, password FROM %s'
+            statement = f'SELECT email, username, password FROM {userTable}'
             print(userTable)
-            cursor.execute(statement, (userTable,))
+            cursor.execute(statement)
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
             usernameList = [x[1] for x in rows]
@@ -75,8 +75,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             email = dictionary['email']
             password = dictionary['password'].encode()
     
-            statement = 'SELECT email FROM %s'
-            cursor.execute(statement, (userTable,))
+            statement = f'SELECT email FROM {userTable}'
+            cursor.execute(statement)
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
     
@@ -87,9 +87,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 username = email[:email.rindex('@')]
                 usernameLen = len(username)
         
-                statement = '''SELECT username FROM %s
+                statement = f'''SELECT username FROM {userTable}
                             WHERE username = %s OR username LIKE %s'''
-                data = (userTable, username + '-%',)
+                data = (username, username + '-%',)
                 cursor.execute(statement, data);
                 similarUsernames = cursor.fetchone()
                 if similarUsernames is not None:
@@ -98,10 +98,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                         username = f'{username[:usernameLen]}-{randint(0, 1_000_000)}'
         
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
-                statement = '''INSERT INTO %s
+                statement = f'''INSERT INTO {userTable}
                             (firstname, lastname, username, password, email, phone)
                             VALUES (%s, %s, %s, %s, %s, %s)'''
-                data = (userTable, firstname, lastname, username, hashedPassword, email, phone,)
+                data = (firstname, lastname, username, hashedPassword, email, phone,)
                 cursor.execute(statement, data)
                 sqlConnection.commit()
         
