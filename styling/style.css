@@ -46,6 +46,18 @@ button {
     cursor: pointer;
 }
 
+
+.form-control {
+    background-color: #E1DFDB;
+}
+
+.form-control:focus {
+    background-color: initial;
+    border-color: transparent;
+    box-shadow: rgb(196, 194, 190) 0px 0px 0px 2px;
+}
+
+
 input {
     max-width: 100%;
 }
