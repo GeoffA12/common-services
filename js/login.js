@@ -1,4 +1,4 @@
-$('#loginForm').submit(async e => {
+$('#loginForm').submit(async function (e) {
     e.preventDefault();
 
     var urlPrefix = (window.location.href.includes("demand")) ? "demand" : "supply";
@@ -6,14 +6,14 @@ $('#loginForm').submit(async e => {
     // console.log(url);
 
     var login = {'cloud': urlPrefix}
-    form = document.getElementById('loginForm');
+    form = document.getElementById(this.id);
     // console.log(form);
     inputs = form.querySelectorAll('input');
     // console.log(inputs);
     
-    inputs.forEach((e, i) => {
-        // console.log(e);
-        login[`${e.id}`] = e.value;
+    inputs.forEach((input, i) => {
+        // console.log(input);
+        login[`${input.id}`] = input.value;
     })
     // console.log(login)
 
