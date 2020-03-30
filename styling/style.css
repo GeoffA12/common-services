@@ -16,7 +16,7 @@ header,
 footer {
     background-color: #E1DFDB;
     width: 100vw;
-    padding: 0 3vw 0 3vw;
+    padding: 0 5vw 0 5vw;
 }   
 
 header {
@@ -57,6 +57,11 @@ button {
     box-shadow: rgb(196, 194, 190) 0px 0px 0px 2px;
 }
 
+.fa {
+    color: black;
+    padding-top: 6px;
+    margin-left: 8px;
+}
 
 input {
     max-width: 100%;
