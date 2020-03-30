@@ -15,7 +15,14 @@ let inputValidation = input => {
             break;
 
         case 'password':
-            var passwordRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+            var passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+            /*
+                The string must be eight characters or longer
+                The string must contain at least 1 lowercase alphabetical character
+                The string must contain at least 1 uppercase alphabetical character
+                The string must contain at least 1 numeric character
+                The string must contain at least one special character, but we are escaping reserved RegEx characters to avoid conflict
+            */
             if (!(passwordRegex.test(inputVal))) {
                 return false;
             }
@@ -28,8 +35,8 @@ $(document).ready(
     $('input').blur(function (e) {
         let myInput = this
         const isInvald = inputValidation(myInput);
-        if (isInvald) {
-            input.style.borderColor = 'red';
+        if (!isInvald) {
+            myInput.style.borderColor = 'red';
         }
     })
 )
