@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="google-signin-client_id" content="562601301105-t3d4socjlrl952tku6g03qsujcafa9q3.apps.googleusercontent.com">
+    <link rel="icon" href="/common-services/images/favicon.png">
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -27,12 +28,14 @@
     <!-- Page specific Scripts -->
     <script type="text/javascript" src="/common-services/js/redirect.js"></script>
     <script type="text/javascript" src="/common-services/js/register.js" defer></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.11/js/intlTelInput.min.js"></script> -->
-
-
     
     <!-- Page specific Styles -->
     <link rel="stylesheet" href="/common-services/styling/register.css" media="screen">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
 
     <script>
@@ -69,34 +72,59 @@
                             <div style="width: 45%; margin-right: 5%;">
                                 <label for="firstname">First Name (required) </label>
                                 <div>
-                                    <input required type="text" id="firstname" placeholder="John"/>
+                                    <input required class="form-control" type="text" id="firstname" placeholder="John"/>
                                 </div>
                             </div>
                             <div style="width: 45%; margin-left: 5%;">
                                 <label for="lastname">Last name (required)</label>
                                 <div class="input-group">
-                                    <input required type="text" id="lastname" placeholder="Smith"/>
+                                    <input required class="form-control" type="text" id="lastname" placeholder="Smith"/>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group input-group">
                             <label for="phonenumber">Phone Number (required)</label>
                             <div class="input-group">
-                                <input required type="tel" id="phonenumber" placeholder="123 456 7890"/>
+                                <input required class="form-control" type="tel" id="phonenumber" placeholder="123 456 7890"/>
                             </div>
                         </div>
                         <div class="form-group input-group">
                             <label for="email">Email (required)</label><span id="emailError" class="error"></span>
                             <div class="input-group">
-                                <input required type="email" id="email" placeholder="johnsmith@gmail.com"/>          
+                                <input required class="form-control" type="email" id="email" placeholder="johnsmith@gmail.com"/>          
                             </div>
                         </div>
+
                         <div class="form-group input-group">
-                            <label for="password">Password (required)</label><span id="passwordError" class="error"></span>
-                            <div class="input-group">
-                                <input required type="password" id="password" placeholder="Password"/>     
+                            <label for="password">Password (required)</label>
+                            <span style="margin: 0 2px 0 2px;"></span>
+                            <label for="pasword" id="tooltip" style="cursor: pointer;">
+                                <span class="field-tip">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewbox="0 0 180 180">
+                                        <path fill="none" stroke="#000" stroke-width="18" d="M9,89a81,81 0 1,1 0,2zm51-14c0-13 1-19 8-26c7-9 18-10 28-8c10,2 22,12 22,26c0,14-11,19-15,22c-3,3-5,6-5,9v22m0,12v16"/>
+                                    </svg>
+                                    <span class="tip-content">
+                                        Password Requirements:
+                                        <ul>
+                                            <li>At least eight characters </li>
+                                            <li>At least 1 uppercase alphabetical character</li>
+                                            <li>At least 1 lowercase alphabetical character</li>
+                                            <li>At least 1 numeric character</li>
+                                            <li>At least one special character</li>
+                                        </ul>
+                                    </span>
+                                </span>    
+                            </label>                         
+
+                            <div class="input-group" id="show_hide_password">
+                                <input class="form-control" required type="password" id="password" placeholder="Password"/>
+                                <div class="input-group-btn">
+                                    <a><i class="fa fa-eye-slash" style="padding-top: 11px;" aria-hidden="true"></i></a>
+                                </div>  
                             </div>
                         </div>
+                        
                         <button type="submit" class="btn-block op" style="height: 50px; font-weight: bolder;">Start Now</button>
                     </form>
                     <div class="form-group">
@@ -109,6 +137,23 @@
             </div>    
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#show_hide_password a").on('click', function (event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("fa-eye-slash");
+                    $('#show_hide_password i').removeClass("fa-eye");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("fa-eye-slash");
+                    $('#show_hide_password i').addClass("fa-eye");
+                }
+            });
+        });
+    </script>
 
     <footer class="page-footer fixed-bottom font-small lighten-5 shadow-lg">
         <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:

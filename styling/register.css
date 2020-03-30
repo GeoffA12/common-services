@@ -15,17 +15,69 @@
 
 label {
     font-weight: 800;
+    font-size: 14px;
+}
+
+/* Hover tooltips */
+.field-tip {
+    position: relative;
+}
+
+.field-tip .tip-content {
+    position: absolute;
+    top: -50px; /* - top padding */
+    right: 9999px;
+    width: 300px;
+    margin-right: -300px; /* width + left/right padding */
+    padding: 10px;
+    color: rgb(233, 233, 233);
+    background: rgb(150, 150, 150);
+    -webkit-box-shadow: 2px 2px 5px #aaa;
+    -moz-box-shadow: 2px 2px 5px #aaa;
+    box-shadow: 2px 2px 5px #aaa;
+    opacity: 0;
+    -webkit-transition: opacity 250ms ease-out;
+    -moz-transition: opacity 250ms ease-out;
+    -ms-transition: opacity 250ms ease-out;
+    -o-transition: opacity 250ms ease-out;
+    transition: opacity 250ms ease-out;
+}
+
+/* <http://css-tricks.com/snippets/css/css-triangle/> */
+.field-tip .tip-content:before {
+    content: ' '; /* Must have content to display */
+    position: absolute;
+    top: 29%;
+    left: -16px; /* 2 x border width */
+    width: 10;
+    height: 0;
+    margin-top: -8px;  /* - border width */
+    border: 8px solid transparent;
+    border-right-color: rgb(150, 150, 150);
+}
+
+.field-tip:hover .tip-content {
+    right: -15px;
+    opacity: 1;
+    z-index: 2;
 }
 
 input {
     background-color: transparent;
     border-width: 1px;
-    border-color : rgb(196, 194, 190);
+    border-color: rgb(196, 194, 190);
     border-style: solid;
     border-radius: 2px;
     padding: 15px 0 15px 15px;
     height: 45px;
     width: 100%;
+}
+
+.fa {
+    color: black;
+    font-size: 27px;
+    padding-top: 6px;
+    margin-left: 8px;
 }
 
 .error {
