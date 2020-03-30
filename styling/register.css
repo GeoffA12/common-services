@@ -13,11 +13,6 @@
     max-width: 400px;
 }
 
-label {
-    font-weight: 800;
-    font-size: 14px;
-}
-
 /* Hover tooltips */
 .field-tip {
     position: relative;
@@ -62,6 +57,11 @@ label {
     z-index: 2;
 }
 
+label {
+    font-weight: 800;
+    font-size: 14px;
+}
+
 input {
     background-color: transparent;
     border-width: 1px;
@@ -78,8 +78,4 @@ input {
     font-size: 27px;
     padding-top: 6px;
     margin-left: 8px;
-}
-
-.error {
-    color: red;
 }

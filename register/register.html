@@ -26,16 +26,16 @@
 <!-- END    ALWAYS GOES IN THE HEAD OF EVERY HTML PAGE -->
     
     <!-- Page specific Scripts -->
-    <script type="text/javascript" src="/common-services/js/redirect.js"></script>
-    <script type="text/javascript" src="/common-services/js/register.js" defer></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.11/js/intlTelInput.min.js"></script> -->
+    <script src="/common-services/js/redirect.js"></script>
+    <script src="/common-services/js/register.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+    <script src="/common-services/js/hideshowpassword.js"></script>
+    
     
     <!-- Page specific Styles -->
     <link rel="stylesheet" href="/common-services/styling/register.css" media="screen">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">   
 
 
     <script>
@@ -137,23 +137,6 @@
             </div>    
         </div>
     </div>
-
-    <script>
-        $(document).ready(function () {
-            $("#show_hide_password a").on('click', function (event) {
-                event.preventDefault();
-                if ($('#show_hide_password input').attr("type") == "text") {
-                    $('#show_hide_password input').attr('type', 'password');
-                    $('#show_hide_password i').addClass("fa-eye-slash");
-                    $('#show_hide_password i').removeClass("fa-eye");
-                } else if ($('#show_hide_password input').attr("type") == "password") {
-                    $('#show_hide_password input').attr('type', 'text');
-                    $('#show_hide_password i').removeClass("fa-eye-slash");
-                    $('#show_hide_password i').addClass("fa-eye");
-                }
-            });
-        });
-    </script>
 
     <footer class="page-footer fixed-bottom font-small lighten-5 shadow-lg">
         <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
