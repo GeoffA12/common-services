@@ -4,14 +4,12 @@ let inputValidation = input => {
     let inputValLen = inputVal.length;
     input.style.borderColor = 'rgb(196, 194, 190)';
     if (inputValLen == 0) {
-        input.style.borderColor = 'red';
         return false;
     }
     switch (inputId) {
         case 'email':
             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             if (!(regex.test(inputVal))) {
-                input.style.borderColor = 'red';
                 return false;
             }
             break;
@@ -19,17 +17,20 @@ let inputValidation = input => {
         case 'password':
             var passwordRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
             if (!(passwordRegex.test(inputVal))) {
-                input.style.borderColor = 'red';
                 return false;
             }
             break;
     }
+    return true;
 }
 
 $(document).ready(
     $('input').blur(function (e) {
         let myInput = this
-        inputValidation(myInput);
+        const isInvald = inputValidation(myInput);
+        if (isInvald) {
+            input.style.borderColor = 'red';
+        }
     })
 )
 
@@ -49,22 +50,24 @@ $('#registerForm').submit(async function (e) {
     let noneAreEmpty = [];
     let emptyFieldIds = [];
     inputs.forEach((input, i) => {
-        // console.log(e);
-        if (!inputValidation(input)) {
-            noneAreEmpty.push(inputValidation(input));
+        let isValid = inputValidation(input);
+        console.log(isValid);
+        if (!isValid) {
+            // console.log('got here');
+            input.style.borderColor = 'red';
+            noneAreEmpty.push(isValid);
             emptyFieldIds.push(input.id)
         } else {
             register[`${input.id}`] = input.value;
         }
     })
-    // console.log(register);
     // console.log(emptyFieldIds)
     // console.log(noneAreEmpty);
-
     if (noneAreEmpty.includes(false)) {
         return false;
     }
-
+    // console.log(register);
+    
     await fetch(url, {
         method: 'POST',
         headers: {
