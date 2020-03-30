@@ -79,7 +79,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             cursor.execute(statement)
             rows = cursor.fetchall()
             emailList = [x[0] for x in rows]
-    
+            print(emailList)
+            print(email not in emailList)
             if email not in emailList:
                 print(email)
                 print(password)
