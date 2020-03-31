@@ -2,9 +2,7 @@ body,
 html {
     scroll-behavior: smooth;
     height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+    width: 100vw;
     background-color: #E1DFDB;
     font-size: 16px;
     font-family: Ubuntu;
@@ -22,10 +20,6 @@ footer {
 header {
     font-size: 20px;
     font-weight: bold;
-}
-
-header button {
-    width: 100px;
 }
 
 header a {
@@ -49,6 +43,11 @@ button {
 
 .form-control {
     background-color: #E1DFDB;
+}
+
+.btn:focus {
+    border-color: transparent;
+    box-shadow: rgb(196, 194, 190) 0px 0px 0px 2px; */
 }
 
 .form-control:focus {
