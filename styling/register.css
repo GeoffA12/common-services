@@ -1,0 +1,116 @@
+.Absolute-Center {
+    margin: 2vh auto 10vh auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.Absolute-Center.is-Responsive {
+    width: 50%;
+    height: 50%;
+    min-width: 200px;
+    max-width: 400px;
+}
+
+/* Hover tooltips */
+
+.field-tip {
+    position: relative;
+}
+
+.field-tip .tip-content {
+    position: absolute;
+    top: -50px;
+    /* - top padding */
+    right: 9999px;
+    width: 300px;
+    margin-right: -300px;
+    /* width + left/right padding */
+    padding: 10px;
+    color: rgb(233, 233, 233);
+    background: rgb(150, 150, 150);
+    -webkit-box-shadow: 2px 2px 5px #aaa;
+    -moz-box-shadow: 2px 2px 5px #aaa;
+    box-shadow: 2px 2px 5px #aaa;
+    opacity: 0;
+    -webkit-transition: opacity 250ms ease-out;
+    -moz-transition: opacity 250ms ease-out;
+    -ms-transition: opacity 250ms ease-out;
+    -o-transition: opacity 250ms ease-out;
+    transition: opacity 250ms ease-out;
+}
+
+/* <http://css-tricks.com/snippets/css/css-triangle/> */
+
+.field-tip .tip-content:before {
+    content: ' ';
+    /* Must have content to display */
+    position: absolute;
+    top: 29%;
+    left: -16px;
+    /* 2 x border width */
+    width: 10;
+    height: 0;
+    margin-top: -8px;
+    /* - border width */
+    border: 8px solid transparent;
+    border-right-color: rgb(150, 150, 150);
+}
+
+.field-tip:hover .tip-content {
+    right: -15px;
+    opacity: 1;
+    z-index: 99999;
+}
+
+div.ui.fluid.search.selection.dropdown.numext, i.dropdown.icon, input.search {
+    max-height: 38px !important;
+}
+
+div.menu {
+    background-color: #E1DFDB !important;
+}
+
+div.ui.fluid.search.selection.dropdown.numext {
+    width: 125px !important;
+    border-radius: 0px;
+    background-color: transparent;
+}
+
+div.default {
+    color: black;
+}
+
+div.item {
+    font-size: 14px !important;
+}
+
+label {
+    font-weight: 800;
+    font-size: 14px;
+}
+
+div.ui.fluid.search.selection.dropdown.numext {
+    width: 32px;
+    border-width: 1px;
+    border-color: rgb(210, 206, 198);
+    border-style: solid;
+}
+
+div.ui.fluid.search.selection.dropdown.numext {
+    border-right: none;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+input {
+    background-color: transparent;
+    border-width: 1px;
+    border-color: rgb(196, 194, 190);
+    border-style: solid;
+    border-radius: 2px;
+    padding: 15px 0 15px 15px;
+    height: 45px;
+    width: 100%;
+}

@@ -2,12 +2,14 @@ import http.server
 from http.server import BaseHTTPRequestHandler
 import json
 import mysql.connector as sqldb
+from random import randint
 import bcrypt
+
 
 def connectToSQLDB(myDB):
     str = f'team22{myDB}'
     print(str)
-    return sqldb.connect(user = 'root', password = 'password', database = f'team22{myDB}', port = 6022)
+    return sqldb.connect(user='root', password='password', database=f'team22{myDB}', port=6022)
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -21,95 +23,96 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         return json.loads(body)
     
     def do_POST(self):
+        status = 404
+        responseBody = {}
         path = self.path
         print(path)
-        responseDict = {}
         dictionary = self.getPOSTBody()
         print(dictionary)
         myCloud = dictionary.pop('cloud')
         isSupply = 'supply' == myCloud
-        cloud = {
-            'name': 'demand',
-            'table': 'customers'
-            }
+        cloud = 'demand'
+        userTable = 'customers'
         print(path)
         print(isSupply)
         if isSupply:
-            cloud['name'] = 'supply'
-            cloud['table'] = 'fleetmanagers'
-    
+            cloud = 'supply'
+            userTable = 'fleetmanagers'
+
+        sqlConnection = connectToSQLDB(cloud)
+        cursor = sqlConnection.cursor()
+
         if '/loginHandler' in path:
-            print(dictionary)
+            status = 401
             username = dictionary['username']
             password = dictionary['password'].encode()
             print(username)
             print(password)
-
-            statement = f'SELECT username, password FROM {cloud["table"]}'
-            sqlConnection = connectToSQLDB(cloud['name'])
-            cursor = sqlConnection.cursor()
+    
+            statement = f'SELECT email, username, password FROM {userTable}'
+            print(userTable)
             cursor.execute(statement)
             rows = cursor.fetchall()
-            usernameList = [x[0] for x in rows]
-            passwordList = [x[1] for x in rows]
-            cursor.close()
+            emailList = [x[0] for x in rows]
+            usernameList = [x[1] for x in rows]
+            passwordList = [x[2] for x in rows]
+    
+            compositeIndetifiers = zip(emailList, usernameList)
+            if any(username in x for x in compositeIndetifiers):
+                dictEmailKey = dict(zip(emailList, passwordList))
+                dictUsernameKey = dict(zip(usernameList, passwordList))
+                if bcrypt.checkpw(password, dictEmailKey[username].encode()) or \
+                        bcrypt.checkpw(password, dictUsernameKey[username].encode()):
+                    status = 200
 
-            # Make a dictionary from the usernameList and passwordList where
-            # key:value ==> username:password
-            userpass = dict(zip(usernameList, passwordList))
 
-            if username in userpass.keys() and bcrypt.checkpw(password, userpass[username].encode()):
-                status = 200
-
-            # We'll send a 401 code back to the client if the user hasn't registered in our database
-            else:
-                status = 401
-                responseDict['Reason'] = 'Credentials do no exist in the database'
-        
         # If we are receiving a request to register an account
         elif '/registerHandler' in path:
-            print(dictionary)
-            username = dictionary['username']
-            password = dictionary['password'].encode()
+            status = 401
+            firstname = dictionary['firstname']
+            lastname = dictionary['lastname']
+            phone = dictionary['phonenumber']
             email = dictionary['email']
-            phone = dictionary['phoneNumber']
-
-            statement = f'SELECT username FROM {cloud["table"]}'
-            sqlConnection = connectToSQLDB(cloud['name'])
-            cursor = sqlConnection.cursor()
+            password = dictionary['password'].encode()
+    
+            statement = f'SELECT email FROM {userTable}'
             cursor.execute(statement)
             rows = cursor.fetchall()
-            usernameList = [x[0] for x in rows]
-            cursor.close()
-    
-            # The equivalent of arr.contains(e)
-            if username in usernameList:
-                status = 401
-                responseDict['Reason'] = 'Username already exists'
-    
-            else:
-                print(username)
+            emailList = [x[0] for x in rows]
+            print(emailList)
+            print(email not in emailList)
+            if email not in emailList:
+                print(email)
                 print(password)
-    
+        
+                username = email[:email.rindex('@')]
+                usernameLen = len(username)
+        
+                statement = f'''SELECT username FROM {userTable}
+                            WHERE username = %s OR username LIKE %s'''
+                data = (username, username + '-%',)
+                cursor.execute(statement, data);
+                similarUsernames = cursor.fetchone()
+                if similarUsernames is not None:
+                    checker = [x[0] for x in similarUsernames]
+                    while username in checker:
+                        username = f'{username[:usernameLen]}-{randint(0, 1_000_000)}'
+        
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
-                statement = f'INSERT INTO {cloud["table"]} (username, password, email, phone) VALUES (%s, %s, %s, %s)'
-                data = (username, hashedPassword, email, phone)
-                # with sqlConnection.cursor() as cursor:
-                cursor = sqlConnection.cursor()
+                statement = f'''INSERT INTO {userTable}
+                            (firstname, lastname, username, password, email, phone)
+                            VALUES (%s, %s, %s, %s, %s, %s)'''
+                data = (firstname, lastname, username, hashedPassword, email, phone,)
                 cursor.execute(statement, data)
                 sqlConnection.commit()
-                cursor.close()
-    
+        
                 status = 200
 
-        else:
-            status = 404
-            responseDict['Reason'] = 'Endpoint doesn\'t exists'
-    
+        cursor.close()
         sqlConnection.close()
         self.send_response(status)
         self.end_headers()
-        res = json.dumps(responseDict)
+        res = json.dumps(responseBody)
         bytesStr = res.encode('utf-8')
         self.wfile.write(bytesStr)
     

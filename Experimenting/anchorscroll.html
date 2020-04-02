@@ -1,0 +1,38 @@
+<style>
+    div {
+    height: 400px;
+}
+</style>
+<a href="#one" class="hash">One</a> 
+<div>
+    <p>some text</p>
+</div>
+<a href="#two" class="hash">Two</a> 
+<div>
+    <p>some text</p>
+</div>
+<a href="#three" class="hash">Three</a> 
+<div>
+    <p>some text</p>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script>
+$(function() {
+  var currentHash = "#one"
+  $(document).scroll(function() {
+      console.log('sup')   
+    $('.hash').each(function() {
+      var top = window.pageYOffset;
+      var distance = top - $(this).offset().top;
+      var hash = $(this).attr('href');
+
+      if (distance < 30 && distance > -30 && currentHash != hash) {
+        alert(hash);
+        currentHash = hash;
+        history.pushState(null, null, `#${hash}`)
+      }
+    });
+  });
+});
+
+</script>

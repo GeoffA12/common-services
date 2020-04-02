@@ -1,0 +1,20 @@
+#top {
+    height: 90vh;
+}
+
+#services {
+    height: 80vh;
+}
+
+#gettingStarted {
+    width: 33%;
+    border-radius: 8px;
+    border-width: 1px;
+    font-size: 20px;
+    height: 48px;
+}
+
+#gettingStarted:hover {
+    color: #E1DFDB;
+    background-color: rgb(111, 64, 187);
+}
