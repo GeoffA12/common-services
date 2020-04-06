@@ -15,7 +15,7 @@ let inputValidation = input => {
             break;
 
         case 'password':
-            var passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+            var passwordRegex = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/
             /*
                 The string must be eight characters or longer
                 The string must contain at least 1 lowercase alphabetical character
@@ -67,8 +67,7 @@ $('#registerForm').submit(async function (e) {
     if (noneAreEmpty.includes(false)) {
         return false;
     }
-    
-    
+
     await fetch(url, {
         method: 'POST',
         headers: {
