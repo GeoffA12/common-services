@@ -53,7 +53,14 @@
         }
         // CID 562601301105-t3d4socjlrl952tku6g03qsujcafa9q3.apps.googleusercontent.com
         // SK M2ocKs1QJERKhq8Jaa_yX5_O
-        </script>
+    </script>
+    <link rel="stylesheet" href="/common-services/register/build/css/intlTelInput.css">
+
+    <script src="/common-services/register/build/js/intlTelInput.min.js"></script>
+    <script src="/common-services/register/build/js/utils.js"></script>
+    <script src="/common-services/register/build/js/intlTelInput-jquery.min.js"></script>
+
+
 <title>WeGo Registration</title>
 </head>
 
@@ -90,235 +97,19 @@
 
                         <div class="form-group input-group">
                             <label for="phonenumber">Phone Number (required)</label>
+                            <!-- 
+                                TODO: Just gui component implemented, need to actually extract the extension
+                                as well as update the mask based on what extension is select
+                            -->
                             <div class="input-group">
-                                <div class="input-group-btn">
-                                    <div class="ui fluid search selection dropdown numext">
-                                        <input type="hidden" name="country" value="">
-                                        <i class="dropdown icon"></i>
-                                        <div class="default text">
-                                            <div class="default" data-value="1"><i class="us flag"></i>+1</div>
-                                        </div>
-                                        <div class="menu">
-                                            <div class="item" data-value="1"><i class="us flag"></i>+1</div>
-                                            <div class="item" data-value="64"><i class="nz flag"></i>+64</div>
-                                            <div class="item" data-value="61"><i class="au flag"></i>+61</div>
-                                            <div class="item" data-value="44"><i class="gb flag"></i>+44</div>
-                                            <div class="item" data-value="213"><i class="dz flag"></i>+213</div>
-                                            <div class="item" data-value="376"><i class="ad flag"></i>+376</div>
-                                            <div class="item" data-value="244"><i class="ao flag"></i>+244</div>
-                                            <div class="item" data-value="1264"><i class="ai flag"></i>+1264</div>
-                                            <div class="item" data-value="1268"><i class="ag flag"></i>+1268</div>
-                                            <div class="item" data-value="54"><i class="ar flag"></i>+54</div>
-                                            <div class="item" data-value="374"><i class="am flag"></i>+374</div>
-                                            <div class="item" data-value="297"><i class="aw flag"></i>+297</div>
-                                            <div class="item" data-value="43"><i class="at flag"></i>+43</div>
-                                            <div class="item" data-value="994"><i class="az flag"></i>+994</div>
-                                            <div class="item" data-value="1242"><i class="bs flag"></i>+1242</div>
-                                            <div class="item" data-value="973"><i class="bh flag"></i>+973</div>
-                                            <div class="item" data-value="880"><i class="bd flag"></i>+880</div>
-                                            <div class="item" data-value="1246"><i class="bb flag"></i>+1246</div>
-                                            <div class="item" data-value="375"><i class="by flag"></i>+375</div>
-                                            <div class="item" data-value="32"><i class="be flag"></i>+32</div>
-                                            <div class="item" data-value="501"><i class="bz flag"></i>+501</div>
-                                            <div class="item" data-value="229"><i class="bj flag"></i>+229</div>
-                                            <div class="item" data-value="1441"><i class="bm flag"></i>+1441</div>
-                                            <div class="item" data-value="975"><i class="bt flag"></i>+975</div>
-                                            <div class="item" data-value="591"><i class="bo flag"></i>+591</div>
-                                            <div class="item" data-value="387"><i class="ba flag"></i>+387</div>
-                                            <div class="item" data-value="267"><i class="bw flag"></i>+267</div>
-                                            <div class="item" data-value="55"><i class="br flag"></i>+55</div>
-                                            <div class="item" data-value="673"><i class="bn flag"></i>+673</div>
-                                            <div class="item" data-value="359"><i class="bg flag"></i>+359</div>
-                                            <div class="item" data-value="226"><i class="bf flag"></i>+226</div>
-                                            <div class="item" data-value="257"><i class="bi flag"></i>+257</div>
-                                            <div class="item" data-value="855"><i class="kh flag"></i>+855</div>
-                                            <div class="item" data-value="237"><i class="cm flag"></i>+237</div>
-                                            <div class="item" data-value="1"><i class="ca flag"></i>+1</div>
-                                            <div class="item" data-value="238"><i class="cv flag"></i>+238</div>
-                                            <div class="item" data-value="1345"><i class="ky flag"></i>+1345</div>
-                                            <div class="item" data-value="236"><i class="cf flag"></i>+236</div>
-                                            <div class="item" data-value="56"><i class="cl flag"></i>+56</div>
-                                            <div class="item" data-value="86"><i class="cn flag"></i>+86</div>
-                                            <div class="item" data-value="57"><i class="co flag"></i>+57</div>
-                                            <div class="item" data-value="269"><i class="km flag"></i>+269</div>
-                                            <div class="item" data-value="242"><i class="cg flag"></i>+242</div>
-                                            <div class="item" data-value="682"><i class="ck flag"></i>+682</div>
-                                            <div class="item" data-value="506"><i class="cr flag"></i>+506</div>
-                                            <div class="item" data-value="385"><i class="hr flag"></i>+385</div>
-                                            <!-- <div class="item" data-value="53"><i class="cu flag"></i>+53</div> -->
-                                            <div class="item" data-value="90"><i class="cy flag"></i>+90</div>
-                                            <div class="item" data-value="357"><i class="cy flag"></i>+357</div>
-                                            <div class="item" data-value="420"><i class="cz flag"></i>+420</div>
-                                            <div class="item" data-value="45"><i class="dk flag"></i>+45</div>
-                                            <div class="item" data-value="253"><i class="dj flag"></i>+253</div>
-                                            <div class="item" data-value="1809"><i class="dm flag"></i>+1809</div>
-                                            <div class="item" data-value="1809"><i class="do flag"></i>+1809</div>
-                                            <div class="item" data-value="593"><i class="ec flag"></i>+593</div>
-                                            <div class="item" data-value="20"><i class="eg flag"></i>+20</div>
-                                            <div class="item" data-value="503"><i class="sv flag"></i>+503</div>
-                                            <div class="item" data-value="240"><i class="gq flag"></i>+240</div>
-                                            <div class="item" data-value="291"><i class="er flag"></i>+291</div>
-                                            <div class="item" data-value="372"><i class="ee flag"></i>+372</div>
-                                            <div class="item" data-value="251"><i class="et flag"></i>+251</div>
-                                            <div class="item" data-value="500"><i class="fk flag"></i>+500</div>
-                                            <div class="item" data-value="298"><i class="fo flag"></i>+298</div>
-                                            <div class="item" data-value="679"><i class="fj flag"></i>+679</div>
-                                            <div class="item" data-value="358"><i class="fi flag"></i>+358</div>
-                                            <div class="item" data-value="33"><i class="fr flag"></i>+33</div>
-                                            <div class="item" data-value="594"><i class="gf flag"></i>+594</div>
-                                            <div class="item" data-value="689"><i class="pf flag"></i>+689</div>
-                                            <div class="item" data-value="241"><i class="ga flag"></i>+241</div>
-                                            <div class="item" data-value="220"><i class="gm flag"></i>+220</div>
-                                            <div class="item" data-value="7880"><i class="ge flag"></i>+7880</div>
-                                            <div class="item" data-value="49"><i class="de flag"></i>+49</div>
-                                            <div class="item" data-value="233"><i class="gh flag"></i>+233</div>
-                                            <div class="item" data-value="350"><i class="gi flag"></i>+350</div>
-                                            <div class="item" data-value="30"><i class="gr flag"></i>+30</div>
-                                            <div class="item" data-value="299"><i class="gl flag"></i>+299</div>
-                                            <div class="item" data-value="1473"><i class="gd flag"></i>+1473</div>
-                                            <div class="item" data-value="590"><i class="gp flag"></i>+590</div>
-                                            <div class="item" data-value="671"><i class="gu flag"></i>+671</div>
-                                            <div class="item" data-value="502"><i class="gt flag"></i>+502</div>
-                                            <div class="item" data-value="224"><i class="gn flag"></i>+224</div>
-                                            <div class="item" data-value="245"><i class="gw flag"></i>+245</div>
-                                            <div class="item" data-value="592"><i class="gy flag"></i>+592</div>
-                                            <div class="item" data-value="509"><i class="ht flag"></i>+509</div>
-                                            <div class="item" data-value="504"><i class="hn flag"></i>+504</div>
-                                            <div class="item" data-value="852"><i class="hk flag"></i>+852</div>
-                                            <div class="item" data-value="36"><i class="hu flag"></i>+36</div>
-                                            <div class="item" data-value="354"><i class="is flag"></i>+354</div>
-                                            <div class="item" data-value="91"><i class="in flag"></i>+91</div>
-                                            <div class="item" data-value="62"><i class="id flag"></i>+62</div>
-                                            <div class="item" data-value="964"><i class="iq flag"></i>+964</div>
-                                            <!-- <div class="item" data-value="98"><i class="ir flag"></i>+98</div> -->
-                                            <div class="item" data-value="353"><i class="ie flag"></i>+353</div>
-                                            <div class="item" data-value="972"><i class="il flag"></i>+972</div>
-                                            <div class="item" data-value="39"><i class="it flag"></i>+39</div>
-                                            <div class="item" data-value="1876"><i class="jm flag"></i>+1876</div>
-                                            <div class="item" data-value="81"><i class="jp flag"></i>+81</div>
-                                            <div class="item" data-value="962"><i class="jo flag"></i>+962</div>
-                                            <div class="item" data-value="7"><i class="kz flag"></i>+7</div>
-                                            <div class="item" data-value="254"><i class="ke flag"></i>+254</div>
-                                            <div class="item" data-value="686"><i class="ki flag"></i>+686</div>
-                                            <!-- <div class="item" data-value="850"><i class="kp flag"></i>+850</div> -->
-                                            <div class="item" data-value="82"><i class="kr flag"></i>+82</div>
-                                            <div class="item" data-value="965"><i class="kw flag"></i>+965</div>
-                                            <div class="item" data-value="996"><i class="kg flag"></i>+996</div>
-                                            <div class="item" data-value="856"><i class="la flag"></i>+856</div>
-                                            <div class="item" data-value="371"><i class="lv flag"></i>+371</div>
-                                            <div class="item" data-value="961"><i class="lb flag"></i>+961</div>
-                                            <div class="item" data-value="266"><i class="ls flag"></i>+266</div>
-                                            <div class="item" data-value="231"><i class="lr flag"></i>+231</div>
-                                            <div class="item" data-value="218"><i class="ly flag"></i>+218</div>
-                                            <div class="item" data-value="417"><i class="li flag"></i>+417</div>
-                                            <div class="item" data-value="370"><i class="lt flag"></i>+370</div>
-                                            <div class="item" data-value="352"><i class="lu flag"></i>+352</div>
-                                            <div class="item" data-value="853"><i class="mo flag"></i>+853</div>
-                                            <div class="item" data-value="389"><i class="mk flag"></i>+389</div>
-                                            <div class="item" data-value="261"><i class="mg flag"></i>+261</div>
-                                            <div class="item" data-value="265"><i class="mw flag"></i>+265</div>
-                                            <div class="item" data-value="60"><i class="my flag"></i>+60</div>
-                                            <div class="item" data-value="960"><i class="mv flag"></i>+960</div>
-                                            <div class="item" data-value="223"><i class="ml flag"></i>+223</div>
-                                            <div class="item" data-value="356"><i class="mt flag"></i>+356</div>
-                                            <div class="item" data-value="692"><i class="mh flag"></i>+692</div>
-                                            <div class="item" data-value="596"><i class="mq flag"></i>+596</div>
-                                            <div class="item" data-value="222"><i class="mr flag"></i>+222</div>
-                                            <div class="item" data-value="269"><i class="yt flag"></i>+269</div>
-                                            <div class="item" data-value="52"><i class="mx flag"></i>+52</div>
-                                            <div class="item" data-value="691"><i class="fm flag"></i>+691</div>
-                                            <div class="item" data-value="373"><i class="md flag"></i>+373</div>
-                                            <div class="item" data-value="377"><i class="mc flag"></i>+377</div>
-                                            <div class="item" data-value="976"><i class="mn flag"></i>+976</div>
-                                            <div class="item" data-value="1664"><i class="ms flag"></i>+1664</div>
-                                            <div class="item" data-value="212"><i class="ma flag"></i>+212</div>
-                                            <div class="item" data-value="258"><i class="mz flag"></i>+258</div>
-                                            <div class="item" data-value="95"><i class="mn flag"></i>+95</div>
-                                            <div class="item" data-value="264"><i class="na flag"></i>+264</div>
-                                            <div class="item" data-value="674"><i class="nr flag"></i>+674</div>
-                                            <div class="item" data-value="977"><i class="np flag"></i>+977</div>
-                                            <div class="item" data-value="31"><i class="nl flag"></i>+31</div>
-                                            <div class="item" data-value="687"><i class="nc flag"></i>+687</div>
-                                            <div class="item" data-value="505"><i class="ni flag"></i>+505</div>
-                                            <div class="item" data-value="227"><i class="ne flag"></i>+227</div>
-                                            <div class="item" data-value="234"><i class="ng flag"></i>+234</div>
-                                            <div class="item" data-value="683"><i class="nu flag"></i>+683</div>
-                                            <div class="item" data-value="672"><i class="nf flag"></i>+672</div>
-                                            <div class="item" data-value="670"><i class="np flag"></i>+670</div>
-                                            <div class="item" data-value="47"><i class="no flag"></i>+47</div>
-                                            <div class="item" data-value="968"><i class="om flag"></i>+968</div>
-                                            <div class="item" data-value="92"><i class="pk flag"></i>+92</div>
-                                            <div class="item" data-value="680"><i class="pw flag"></i>+680</div>
-                                            <div class="item" data-value="507"><i class="pa flag"></i>+507</div>
-                                            <div class="item" data-value="675"><i class="pg flag"></i>+675</div>
-                                            <div class="item" data-value="595"><i class="py flag"></i>+595</div>
-                                            <div class="item" data-value="51"><i class="pe flag"></i>+51</div>
-                                            <div class="item" data-value="63"><i class="ph flag"></i>+63</div>
-                                            <div class="item" data-value="48"><i class="pl flag"></i>+48</div>
-                                            <div class="item" data-value="351"><i class="pt flag"></i>+351</div>
-                                            <div class="item" data-value="1787"><i class="pr flag"></i>+1787</div>
-                                            <div class="item" data-value="974"><i class="qa flag"></i>+974</div>
-                                            <div class="item" data-value="262"><i class="re flag"></i>+262</div>
-                                            <div class="item" data-value="40"><i class="ro flag"></i>+40</div>
-                                            <div class="item" data-value="7"><i class="ru flag"></i>+7</div>
-                                            <div class="item" data-value="250"><i class="rw flag"></i>+250</div>
-                                            <div class="item" data-value="378"><i class="sm flag"></i>+378</div>
-                                            <div class="item" data-value="239"><i class="st flag"></i>+239</div>
-                                            <div class="item" data-value="966"><i class="sa flag"></i>+966</div>
-                                            <div class="item" data-value="221"><i class="sn flag"></i>+221</div>
-                                            <div class="item" data-value="381"><i class="cs flag"></i>+381</div>
-                                            <div class="item" data-value="248"><i class="sc flag"></i>+248</div>
-                                            <div class="item" data-value="232"><i class="sl flag"></i>+232</div>
-                                            <div class="item" data-value="65"><i class="sg flag"></i>+65</div>
-                                            <div class="item" data-value="421"><i class="sk flag"></i>+421</div>
-                                            <div class="item" data-value="386"><i class="si flag"></i>+386</div>
-                                            <div class="item" data-value="677"><i class="sb flag"></i>+677</div>
-                                            <div class="item" data-value="252"><i class="so flag"></i>+252</div>
-                                            <div class="item" data-value="27"><i class="za flag"></i>+27</div>
-                                            <div class="item" data-value="34"><i class="es flag"></i>+34</div>
-                                            <div class="item" data-value="94"><i class="lk flag"></i>+94</div>
-                                            <div class="item" data-value="290"><i class="sh flag"></i>+290</div>
-                                            <div class="item" data-value="1869"><i class="kn flag"></i>+1869</div>
-                                            <div class="item" data-value="1758"><i class="sc flag"></i>+1758</div>
-                                            <div class="item" data-value="597"><i class="sr flag"></i>+597</div>
-                                            <div class="item" data-value="249"><i class="sd flag"></i>+249</div>
-                                            <div class="item" data-value="268"><i class="sz flag"></i>+268</div>
-                                            <div class="item" data-value="46"><i class="se flag"></i>+46</div>
-                                            <div class="item" data-value="41"><i class="ch flag"></i>+41</div>
-                                            <!-- <div class="item" data-value="963"><i class="sy flag"></i>+963</div> -->
-                                            <div class="item" data-value="886"><i class="tw flag"></i>+886</div>
-                                            <div class="item" data-value="992"><i class="tj flag"></i>+992</div>
-                                            <div class="item" data-value="66"><i class="th flag"></i>+66</div>
-                                            <div class="item" data-value="228"><i class="tg flag"></i>+228</div>
-                                            <div class="item" data-value="676"><i class="to flag"></i>+676</div>
-                                            <div class="item" data-value="1868"><i class="tt flag"></i>+1868</div>
-                                            <div class="item" data-value="216"><i class="tn flag"></i>+216</div>
-                                            <div class="item" data-value="90"><i class="tr flag"></i>+90</div>
-                                            <div class="item" data-value="993"><i class="tm flag"></i>+993</div>
-                                            <div class="item" data-value="1649"><i class="tc flag"></i>+1649</div>
-                                            <div class="item" data-value="688"><i class="tv flag"></i>+688</div>
-                                            <div class="item" data-value="256"><i class="ug flag"></i>+256</div>
-                                            <div class="item" data-value="380"><i class="ua flag"></i>+380</div>
-                                            <div class="item" data-value="971"><i class="ae flag"></i>+971</div>
-                                            <div class="item" data-value="598"><i class="uy flag"></i>+598</div>
-                                            <div class="item" data-value="998"><i class="uz flag"></i>+998</div>
-                                            <div class="item" data-value="678"><i class="vu flag"></i>+678</div>
-                                            <div class="item" data-value="379"><i class="va flag"></i>+379</div>
-                                            <div class="item" data-value="58"><i class="ve flag"></i>+58</div>
-                                            <div class="item" data-value="84"><i class="vn flag"></i>+84</div>
-                                            <div class="item" data-value="1"><i class="vg flag"></i>+1</div>
-                                            <div class="item" data-value="1"><i class="vi flag"></i>+1</div>
-                                            <div class="item" data-value="681"><i class="wf flag"></i>+681</div>
-                                            <div class="item" data-value="969"><i class="ye flag"></i>+969</div>
-                                            <div class="item" data-value="967"><i class="ye flag"></i>+967</div>
-                                            <div class="item" data-value="260"><i class="zm flag"></i>+260</div>
-                                            <div class="item" data-value="263"><i class="zw flag"></i>+263</div>
-                                        </div>
-                                    </div>
-                                </div>    
-
-                                <input required class="form-control" type="tel" id="phonenumber" placeholder="123 456 7890"/>
+                                <input required class="form-control" type="tel" id="phonenumber"/>
                             </div>
+                            <script>
+                                var input = document.querySelector("#phonenumber");
+                                window.intlTelInput(input, {
+                                    // any initialisation options go here
+                                });
+                            </script>
                         </div>
 
                         <div class="form-group input-group">
@@ -372,7 +163,7 @@
 
     <script>
         $('.ui.dropdown').dropdown();
-        $('#phonenumber').mask('(000) 000-0000')
+        // $('#phonenumber').mask('(000) 000-0000')
     </script>
 
     <footer class="page-footer fixed-bottom font-small lighten-5 shadow-lg">
