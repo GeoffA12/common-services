@@ -8,6 +8,9 @@ body, html {
     overflow-x: hidden;
     overflow-y: auto;
 }
+button, input, optgroup, select, textarea {
+    font-family: Ubuntu;
+}
 
 header, footer {
     background-color: #E1DFDB;
@@ -82,5 +85,5 @@ div.ui.fluid.search.selection.dropdown.numext,
 }
 
 input {
-    max-width: 100%;
+    max-width: 100% !important;
 }
