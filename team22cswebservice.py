@@ -42,7 +42,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         sqlConnection = connectToSQLDB(cloud)
         cursor = sqlConnection.cursor()
 
-        if '/loginHandler' in path:
+        if '/cs/user/login' in path:
             status = 401
             username = dictionary['username']
             password = dictionary['password'].encode()
@@ -67,7 +67,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
 
         # If we are receiving a request to register an account
-        elif '/registerHandler' in path:
+        elif '/cs/user/register' in path:
             status = 401
             firstname = dictionary['firstname']
             lastname = dictionary['lastname']
@@ -91,7 +91,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 statement = f'''SELECT username FROM {userTable}
                             WHERE username = %s OR username LIKE %s'''
                 data = (username, username + '-%',)
-                cursor.execute(statement, data);
+                cursor.execute(statement, data)
                 similarUsernames = cursor.fetchone()
                 if similarUsernames is not None:
                     checker = [x[0] for x in similarUsernames]
