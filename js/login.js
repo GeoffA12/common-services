@@ -2,7 +2,7 @@ $('#loginForm').submit(async function (e) {
     e.preventDefault();
 
     var urlPrefix = (window.location.href.includes("demand")) ? "demand" : "supply";
-    var url = `https://${urlPrefix}.team22.softwareengineeringii.com/loginHandler`;
+    var url = `https://${urlPrefix}.team22.softwareengineeringii.com/cs/user/login`;
     // console.log(url);
 
     var login = {'cloud': urlPrefix}

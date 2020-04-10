@@ -15,7 +15,7 @@ let inputValidation = input => {
             break;
 
         case 'password':
-            var passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+            var passwordRegex = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/
             /*
                 The string must be eight characters or longer
                 The string must contain at least 1 lowercase alphabetical character
@@ -45,14 +45,11 @@ $('#registerForm').submit(async function (e) {
     e.preventDefault();
 
     var urlPrefix = (window.location.href.includes("demand")) ? "demand" : "supply";
-    var url = `https://${urlPrefix}.team22.softwareengineeringii.com/registerHandler`;
-    // console.log(url)
+    var url = `https://${urlPrefix}.team22.softwareengineeringii.com/cs/user/register`;
 
     var register = { 'cloud': urlPrefix }
     form = document.getElementById(this.id);
-    // console.log(form);
     inputs = form.querySelectorAll('input');
-    // console.log(inputs);
 
     let noneAreEmpty = [];
     let emptyFieldIds = [];
@@ -60,7 +57,6 @@ $('#registerForm').submit(async function (e) {
         let isValid = inputValidation(input);
         console.log(isValid);
         if (!isValid) {
-            // console.log('got here');
             input.style.borderColor = 'red';
             noneAreEmpty.push(isValid);
             emptyFieldIds.push(input.id)
@@ -68,13 +64,10 @@ $('#registerForm').submit(async function (e) {
             register[`${input.id}`] = input.value;
         }
     })
-    // console.log(emptyFieldIds)
-    // console.log(noneAreEmpty);
     if (noneAreEmpty.includes(false)) {
         return false;
     }
-    // console.log(register);
-    
+
     await fetch(url, {
         method: 'POST',
         headers: {
