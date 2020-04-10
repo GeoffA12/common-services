@@ -4,9 +4,7 @@
 [![Generic badge](https://img.shields.io/badge/code_style-SWETeam22-teal.svg)](https://bitbucket.org/swei_team22/common-services/src/development-testing/StyleAndDirectoryGuide.md)
 
 ## What to Expect
-This repository will compose of the common service HTML files, the index, login and register pages. 
-I am making a small change to test pushing
- 
+This repository will compose of the common service HTML files, the index, login and register pages.  
 ## Feature Set
 As the HTML filenames may imply, it is our landing page which will allow our users to redirect either a log in or register page
 

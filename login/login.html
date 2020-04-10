@@ -1,114 +1,113 @@
 <!doctype html>
 <html lang="en">
-
+    
 <head>
+<!-- START  ALWAYS GOES IN THE HEAD OF EVERY HTML PAGE -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script>
-        let sendPostRequest = () => {
-            let username = document.getElementById("user_name").value;
-            let password = document.getElementById("user_password").value;
-            if (username.length == 0 || password.length == 0) {
-                alert("You need to enter a username and password");
-                return;
-            }
-            const login = {
-                "username": username,
-                "password": password
-            };
-            sessionStorage.setItem('username', username);
+    <meta name="google-signin-client_id" content="562601301105-t3d4socjlrl952tku6g03qsujcafa9q3.apps.googleusercontent.com">
+    <link rel="icon" href="/common-services/images/favicon.png">
 
-            const payload = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                mode: 'no-cors',
-                body: JSON.stringify(login)
-            }
-            console.log(payload);
-            var seperationOfConcern = "demand";
-            if (window.location.href.indexOf("supply") != -1) {
-                seperationOfConcern = "supply";
-            }
-            var url = `https://${seperationOfConcern}.team22.softwareengineeringii.com/loginHandler`;
-
-            fetch(url, payload).then(function(response) {
-                console.log(response.status);
-                if (response.status == 200) {
-                    url = `https://${seperationOfConcern}.team22.softwareengineeringii.com/${seperationOfConcern}-front-end/dashboard/dashboard.html`
-                    window.location.assign(url);
-                } else {
-                    alert("You don't have an account yet! Go to the regisration page.");
-                }
-            }).catch(function(error) {
-                console.error(error)
-            });
-        }
-    </script>
-
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+    <!-- Google's Benevolence -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <!-- Site wide and page specific Styles -->
+    <!-- Site Wide Style -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">   
     <link rel="stylesheet" href="/common-services/styling/style.css" media="screen">
+<!-- END    ALWAYS GOES IN THE HEAD OF EVERY HTML PAGE -->
+    
+    <!-- Page specific Scripts -->
+    <script src="/common-services/js/redirect.js"></script>
+    <script src="/common-services/js/login.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+    <script src="/common-services/js/hideshowpassword.js"></script>
+    
+    <!-- Page specific Styles -->
+    <link rel="stylesheet" href="/common-services/styling/login.css" media="screen">
+
+    <script>
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        }
+        // CID 562601301105-t3d4socjlrl952tku6g03qsujcafa9q3.apps.googleusercontent.com
+        // SK M2ocKs1QJERKhq8Jaa_yX5_O
+    </script>
     
     <title>WeGo Login</title>
+    
 </head>
 
 <body>
-    <div class="cHeader container-fluid bg-info">
-        <h1>WeGo Services</h1>
-        <br>
-        <h4>Autonomous Delivery & Logistics Services</h4>
-        <br><br>
-    </div>
+    <header id="appHeader" class="navbar sticky-top justify-content-between shadow py-3">
+        <div>
+            <a class="navbar-brand" style="cursor: pointer;" href="/../">WeGo Services</a>
+        </div>
+        <div>
+            <button id="signupButton" class="op" onclick="goToRegister()">Sign Up</button>
+        </div>
+    </header>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="imgHeader rounded-circle m-4 p-5">
-                <img src="../images/note.png">
-            </div>
-
-            <div class="imgHeader rounded-circle m-4 p-5">
-                <img src="../images/disco-ball.png">
-            </div>
-
-            <div class="imgHeader rounded-circle m-4 p-5">
-                <img src="../images/washer.png">
-            </div>
-
-            <div class="imgHeader rounded-circle m-4 p-5">
-                <img src="../images/coffee-machine.png">
-            </div>
+    <!-- Credit: https://codepen.io/OldManJava/pen/bwupj -->
+    <div class="container" style="min-height: 80vh;">
+        <div class="row">
+            <div class="Absolute-Center is-Responsive">
+                <div class="registerContainer">
+                    <h3 style="font-weight: bold;">Log In To WeGo Services</h3>
+                    <form id="loginForm">
+                        <div class="form-group input-group">
+                            <label for="username">Username or Email</label>
+                            <div class="input-group">
+                                <input class="form-control" required type="text" id="username" placeholder="Email or Username"/>          
+                            </div>
+                        </div>
+                        <div class="form-group input-group" id="show_hide_password">
+                            <label for="password">Password</label>
+                            <div class="input-group" id="show_hide_password"> 
+                                <input class="form-control" required type="password" id="password" placeholder="Password"/>
+                                <div class="eye rt input-group-btn">
+                                    <a><i class="fa fa-eye-slash" style="padding-top: 11px;" aria-hidden="true"></i></a>
+                                </div>  
+                            </div>
+                        </div>
+                        <p id="error" class="error" style="font-weight: bold;"></p>
+                        <div class="form-group">
+                            <a style="font-size: 14px;" href="#">Forgot Password</a>
+                        </div>
+                        <button type="submit" class="btn-block op" style="height: 50px; font-weight: bolder;">Log In</button>
+                    </form> 
+                    <div class="form-group">
+                        <label for="socialLogins">Log In With Another Account</label>
+                        <div id="socialLogins" class="form-group">
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                            <p style="width: 100%; text-align: right;"><a style="font-size: 14px;" href="#" onclick="goToRegister()">Not a member yet? Sign up for free</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>    
         </div>
     </div>
 
-    <br>
-    <div class="container" style="text-align: center">
-        <h4 style="text-align: center">Log In</h4>
-        <form class="row justify-content-center" onsubmit="sendPostRequest()">
-            <div class="w-100"></div>
-            <table>
-                <tr>
-                    <td><label>Username:</label></td>
-                    <td>
-                        <input type="text" id="user_name">
-                    </td>
-                </tr>
-                <tr>
-                    <td><label>Password:</label></td>
-                    <td>
-                        <input type="password" id="user_password">
-                    </td>
-                </tr>
-            </table>
-        </form>
-        <button id="submitButton" onclick="sendPostRequest()">Submit</button>
-    </div>
+
+    <footer class="page-footer fixed-bottom font-small lighten-5 shadow-lg">
+        <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
+            <a class="dark-grey-text" href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+        </div>
+    </footer>
 </body>
 
 </html>
