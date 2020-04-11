@@ -14,14 +14,14 @@ def connectToSQLDB(myDB):
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     ver = '0.2.0'
-    
+
     # How to convert the body from a string to a dictionary
     # use 'loads' to convert from byte/string to a dictionary!
     def getPOSTBody(self):
         length = int(self.headers['content-length'])
         body = self.rfile.read(length)
         return json.loads(body)
-    
+
     def do_POST(self):
         status = 404
         responseBody = {}
@@ -48,7 +48,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             password = dictionary['password'].encode()
             print(username)
             print(password)
-    
+
             statement = f'SELECT email, username, password FROM {userTable}'
             print(userTable)
             cursor.execute(statement)
@@ -56,7 +56,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             emailList = [x[0] for x in rows]
             usernameList = [x[1] for x in rows]
             passwordList = [x[2] for x in rows]
-    
+
             compositeIndetifiers = zip(emailList, usernameList)
             if any(username in x for x in compositeIndetifiers):
                 dictEmailKey = dict(zip(emailList, passwordList))
@@ -74,7 +74,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             phone = dictionary['phonenumber']
             email = dictionary['email']
             password = dictionary['password'].encode()
-    
+
             statement = f'SELECT email FROM {userTable}'
             cursor.execute(statement)
             rows = cursor.fetchall()
@@ -84,10 +84,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             if email not in emailList:
                 print(email)
                 print(password)
-        
+
                 username = email[:email.rindex('@')]
                 usernameLen = len(username)
-        
+
                 statement = f'''SELECT username FROM {userTable}
                             WHERE username = %s OR username LIKE %s'''
                 data = (username, username + '-%',)
@@ -97,7 +97,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                     checker = [x[0] for x in similarUsernames]
                     while username in checker:
                         username = f'{username[:usernameLen]}-{randint(0, 1_000_000)}'
-        
+
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
                 statement = f'''INSERT INTO {userTable}
                             (firstname, lastname, username, password, email, phone)
@@ -105,7 +105,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 data = (firstname, lastname, username, hashedPassword, email, phone,)
                 cursor.execute(statement, data)
                 sqlConnection.commit()
-        
+
                 status = 200
 
         cursor.close()
@@ -115,12 +115,12 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         res = json.dumps(responseBody)
         bytesStr = res.encode('utf-8')
         self.wfile.write(bytesStr)
-    
+
     def do_GET(self):
         path = self.path
         status = 200
         responseDict = {}
-        
+
         self.send_response(status)
         self.end_headers()
         res = json.dumps(responseDict)
