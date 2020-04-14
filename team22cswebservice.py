@@ -49,20 +49,16 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             print(username)
             print(password)
 
-            statement = f'SELECT email, username, password FROM {userTable}'
+            # We want to support a user login in with their username so that's why we'll need to ask about both
+            # username AND email when querying the database
+            statement = f'SELECT password FROM {userTable} WHERE username = %s OR email = %s'
             print(userTable)
-            cursor.execute(statement)
-            rows = cursor.fetchall()
-            emailList = [x[0] for x in rows]
-            usernameList = [x[1] for x in rows]
-            passwordList = [x[2] for x in rows]
+            cursor.execute(statement, (username, username))
+            rows = cursor.fetchone()
 
-            compositeIndetifiers = zip(emailList, usernameList)
-            if any(username in x for x in compositeIndetifiers):
-                dictEmailKey = dict(zip(emailList, passwordList))
-                dictUsernameKey = dict(zip(usernameList, passwordList))
-                if bcrypt.checkpw(password, dictEmailKey[username].encode()) or \
-                        bcrypt.checkpw(password, dictUsernameKey[username].encode()):
+            if rows is not None:
+                dbPassword = rows[0]
+                if bcrypt.checkpw(password, dbPassword):
                     status = 200
 
 
@@ -75,34 +71,19 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             email = dictionary['email']
             password = dictionary['password'].encode()
 
-            statement = f'SELECT email FROM {userTable}'
-            cursor.execute(statement)
-            rows = cursor.fetchall()
-            emailList = [x[0] for x in rows]
-            print(emailList)
-            print(email not in emailList)
-            if email not in emailList:
+            statement = f'SELECT email FROM {userTable} where email = %s'
+            cursor.execute(statement, (email,))
+            row = cursor.fetchone()
+            print(row is None)
+            if row is None:
                 print(email)
                 print(password)
 
-                username = email[:email.rindex('@')]
-                usernameLen = len(username)
-
-                statement = f'''SELECT username FROM {userTable}
-                            WHERE username = %s OR username LIKE %s'''
-                data = (username, username + '-%',)
-                cursor.execute(statement, data)
-                similarUsernames = cursor.fetchone()
-                if similarUsernames is not None:
-                    checker = [x[0] for x in similarUsernames]
-                    while username in checker:
-                        username = f'{username[:usernameLen]}-{randint(0, 1_000_000)}'
-
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
-                statement = f'''INSERT INTO {userTable}
-                            (firstname, lastname, username, password, email, phone)
-                            VALUES (%s, %s, %s, %s, %s, %s)'''
-                data = (firstname, lastname, username, hashedPassword, email, phone,)
+                statement = f'INSERT INTO {userTable} VALUES (Null, %s, %s, %s, %s, %s, %s)'
+                # By default, our user's username will be their email, but we want to support allowing a user to login
+                # a username AND to change their username after registration
+                data = (firstname, lastname, email, hashedPassword, email, phone,)
                 cursor.execute(statement, data)
                 sqlConnection.commit()
 
