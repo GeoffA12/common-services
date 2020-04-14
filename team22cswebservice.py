@@ -58,7 +58,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
             if rows is not None:
                 dbPassword = rows[0]
-                if bcrypt.checkpw(password, dbPassword):
+                if bcrypt.checkpw(password, dbPassword.encode()):
                     status = 200
 
 
@@ -68,9 +68,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             firstname = dictionary['firstname']
             lastname = dictionary['lastname']
             phone = dictionary['phonenumber']
+            # phone = phone.replace(' ','')
             email = dictionary['email']
             password = dictionary['password'].encode()
-
+            print(phone)
             statement = f'SELECT email FROM {userTable} where email = %s'
             cursor.execute(statement, (email,))
             row = cursor.fetchone()
@@ -83,7 +84,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 statement = f'INSERT INTO {userTable} VALUES (Null, %s, %s, %s, %s, %s, %s)'
                 # By default, our user's username will be their email, but we want to support allowing a user to login
                 # a username AND to change their username after registration
-                data = (firstname, lastname, email, hashedPassword, email, phone,)
+                data = (email, email, hashedPassword, phone, firstname, lastname,)
                 cursor.execute(statement, data)
                 sqlConnection.commit()
 
