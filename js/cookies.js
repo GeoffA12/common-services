@@ -19,7 +19,8 @@ let base64url = (source) => {
 
 var secret = 'NiQc45rSCNGuXxZ91dBdId2GFclHAA00Tgjg1ABwjQIaxinNxZYqPb3mOH48fqI';
 
-let makeCookie = (username, password, expiration, domain) => {    
+let makeCookie = (username, password, expiration, domain) => {
+    alert('making a cookie');
     var data = {
         'username': username,
         'password': password
@@ -35,11 +36,11 @@ let makeCookie = (username, password, expiration, domain) => {
     signature = base64url(signature);
 
     totallySecretToken = encodedHeader + '.' + encodedData + '.' + signature;
-
-    console.log(expiration)
-
-    document.cookie = `token=${totallySecretToken}; Domain=${domain} ; expires=${expiration}`;
-    console.log(document.cookie);
+    alert(totallySecretToken);
+    alert(expiration)
+    cookie = `token=${totallySecretToken}; path=/ ; Domain=${domain}; expires=${expiration};`
+    document.cookie = cookie;
+    alert(document.cookie);
 }
 
 let getCookie = name => {
