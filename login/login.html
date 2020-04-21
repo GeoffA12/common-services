@@ -50,7 +50,7 @@
         }
         // CID 562601301105-t3d4socjlrl952tku6g03qsujcafa9q3.apps.googleusercontent.com
         // SK M2ocKs1QJERKhq8Jaa_yX5_O
-        function signOut() {
+        function GsignOut() {
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 console.log('User signed out.');
@@ -105,7 +105,7 @@
                     <div class="form-group">
                         <label for="socialLogins">Log In With Another Account</label>
                         <div id="socialLogins" class="form-group">
-                            <a href="#" onclick="signOut();">Sign out</a>
+                            <a href="#" onclick="GsignOut();">Sign out</a>
                             <div class="g-signin2" data-onsuccess="onSignIn"></div>
                             <p style="width: 100%; text-align: right;"><a style="font-size: 14px;" href="#" onclick="goToRegister()">Not a member yet? Sign up for free</a></p>
                         </div>
