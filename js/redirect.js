@@ -9,6 +9,10 @@ let goToLogin = () => {
 let goToRegister = () => {
     window.location.assign(`https://${urlPrefix}.team22.softwareengineeringii.com/common-services/register/register.html`);
 }
+let goToLanding = () => {
+    window.location.assign(`https://${urlPrefix}.team22.softwareengineeringii.com`);
+}
+
 let signOut = () => {
     localStorage.removeItem('username');
     window.location.assign(`https://${urlPrefix}.team22.softwareengineeringii.com`);
