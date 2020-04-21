@@ -15,10 +15,10 @@ $('#loginForm').submit(async function (e) {
         // console.log(input);
         login[`${input.id}`] = input.id == 'rememberMe' ? input.checked : input.value;
     })
-    console.log(login)
+    // console.log(login)
 
     var expiration = login['rememberMe'] ? new Date().addMonths(6) : new Date().addHours(2);
-    console.log(expiration)
+    // console.log(expiration)
     login['expiration'] = expiration.toISOString();
     await fetch(url, {
         method: 'POST',
@@ -30,8 +30,6 @@ $('#loginForm').submit(async function (e) {
     }).then(res => {
         if (res.status == 200) {
             localStorage.setItem('username', login['username'])
-            var domain = `https://${urlPrefix}.team22.softwareengineeringii.com`;
-            makeCookie(login['username'], login['password'], expiration.toGMTString(), domain);
             url = `https://${urlPrefix}.team22.softwareengineeringii.com/${urlPrefix}-front-end/dashboard/dashboard.html`;
             window.location.assign(url);
         } else {
