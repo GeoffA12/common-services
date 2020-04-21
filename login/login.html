@@ -28,7 +28,11 @@
 <!-- END    ALWAYS GOES IN THE HEAD OF EVERY HTML PAGE -->
     
     <!-- Page specific Scripts -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/hmac-sha256.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/enc-base64-min.js"></script>
+
     <script src="/common-services/js/redirect.js"></script>
+    <script src="/common-services/js/cookies.js"></script>
     <script src="/common-services/js/login.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
     <script src="/common-services/js/hideshowpassword.js"></script>
@@ -86,6 +90,8 @@
                         </div>
                         <p id="error" class="error" style="font-weight: bold;"></p>
                         <div class="form-group">
+                            <label for="rememberMe" style="font-weight: normal; margin-right: 5px;">Remember Me</label>
+                            <input type="checkbox" id="rememberMe" style="padding-top: 10px;"><br>
                             <a style="font-size: 14px;" href="#">Forgot Password</a>
                         </div>
                         <button type="submit" class="btn-block op" style="height: 50px; font-weight: bolder;">Log In</button>
