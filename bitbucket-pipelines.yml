@@ -17,4 +17,4 @@ pipelines:
           # We need the ampersand after login.py to ensure that the python file doesn't 
           # stay forked to the foreground and lock our cursor.
           - cd unittest
-          - python3 test-account.py
+          - python3 test_account.py
