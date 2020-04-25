@@ -7,7 +7,10 @@ ver = '0.1.0'
 def connectToSQLDB(myDB):
     str = f'team22{myDB}'
     print(str)
-    return sqldb.connect(user='root', password='password', database=f'team22{myDB}', port=6022)
+    import os
+    import mysql.connector as sqldb
+    password = os.getenv('DB_PASSWORD')
+    return sqldb.connect(user='root', password=password, database=f'team22{myDB}', port=6022)
 
 
 def getUserByCredentials(cloud, username, userTable):
