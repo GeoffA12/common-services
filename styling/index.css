@@ -1,20 +1,18 @@
 #top-img {
     height: 90vh;
 
-    filter: blur(3px);
-    -webkit-filter: blur(3px);
+    background: url('/common-services/images/landing_background.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
 
-
-    /* background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed; */
-    background: url('/common-services/images/landing_background.jpg') no-repeat center center fixed;
-
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
 }
 
 #top {
