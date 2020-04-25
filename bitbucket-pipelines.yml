@@ -5,6 +5,8 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: python:3.6-alpine
 
+options:
+  max-time: 8
 pipelines:
   default:
     - step:
@@ -14,7 +16,5 @@ pipelines:
           - apk update
           - apk add -U --no-cache gcc build-base linux-headers ca-certificates python3-dev libffi-dev libressl-dev libxslt-dev
           - pip install -r requirements.txt
-          # We need the ampersand after login.py to ensure that the python file doesn't 
-          # stay forked to the foreground and lock our cursor.
           - cd unittest
-          - python3 test_account.py
+          - python3 -m unittest discover
