@@ -1,16 +1,9 @@
 import http.server
 from http.server import BaseHTTPRequestHandler
 import json
-import mysql.connector as sqldb
-from random import randint
 import bcrypt
 
-
-def connectToSQLDB(myDB):
-    str = f'team22{myDB}'
-    print(str)
-    return sqldb.connect(user='root', password='password', database=f'team22{myDB}', port=6022)
-
+import utils.databaseutils as databaseutils
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     ver = '0.2.0'
@@ -39,25 +32,24 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             cloud = 'supply'
             userTable = 'fleetmanagers'
 
-        sqlConnection = connectToSQLDB(cloud)
-        cursor = sqlConnection.cursor()
-
         if '/cs/user/login' in path:
             status = 401
             username = dictionary['username']
             password = dictionary['password'].encode()
-            print(username)
-            print(password)
+            # print(username)
+            # print(password)
 
             # We want to support a user login in with their username so that's why we'll need to ask about both
             # username AND email when querying the database
-            statement = f'SELECT password FROM {userTable} WHERE username = %s OR email = %s'
-            print(userTable)
-            cursor.execute(statement, (username, username))
-            rows = cursor.fetchone()
+            # statement = f'SELECT password FROM {userTable} WHERE username = %s OR email = %s'
+            # print(userTable)
+            # cursor.execute(statement, (username, username))
+            # row = cursor.fetchone()
 
-            if rows is not None:
-                dbPassword = rows[0]
+            row = databaseutils.getUserByCredentials(cloud, username, userTable)
+
+            if row is not None:
+                dbPassword = row[0]
                 if bcrypt.checkpw(password, dbPassword.encode()):
                     status = 200
 
@@ -72,26 +64,26 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             email = dictionary['email']
             password = dictionary['password'].encode()
             print(phone)
-            statement = f'SELECT email FROM {userTable} where email = %s'
-            cursor.execute(statement, (email,))
-            row = cursor.fetchone()
-            print(row is None)
+            # statement = f'SELECT email FROM {userTable} where email = %s'
+            # cursor.execute(statement, (email,))
+            # row = cursor.fetchone()
+            row = databaseutils.checkIfEmailExists(cloud, email, userTable)
+
             if row is None:
                 print(email)
-                print(password)
+                # print(password)
 
                 hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt())
-                statement = f'INSERT INTO {userTable} VALUES (Null, %s, %s, %s, %s, %s, %s)'
-                # By default, our user's username will be their email, but we want to support allowing a user to login
-                # a username AND to change their username after registration
-                data = (email, email, hashedPassword, phone, firstname, lastname,)
-                cursor.execute(statement, data)
-                sqlConnection.commit()
+                # statement = f'INSERT INTO {userTable} VALUES (Null, %s, %s, %s, %s, %s, %s)'
+                # # By default, our user's username will be their email, but we want to support allowing a user to login
+                # # a username AND to change their username after registration
+                # data = (email, email, hashedPassword, phone, firstname, lastname,)
+                # cursor.execute(statement, data)
+                # sqlConnection.commit()
+                databaseutils.addNewUser(cloud, userTable, email, hashedPassword, phone, firstname, lastname)
 
                 status = 200
 
-        cursor.close()
-        sqlConnection.close()
         self.send_response(status)
         self.end_headers()
         res = json.dumps(responseBody)
