@@ -41,7 +41,7 @@ button {
 }
 
 .form-control {
-    background-color: #E1DFDB;
+    background-color: rgb(221, 217, 209) !important;
 }
 
 .btn:focus {
@@ -50,21 +50,24 @@ button {
 }
 
 .form-control:focus {
-    background-color: initial;
+    background-color: #E1DFDB;
     border-color: transparent;
-    box-shadow: rgb(196, 194, 190) 0px 0px 0px 1px;
+    box-shadow: rgb(170, 78, 189) 0px 0px 0px 1px;
 }
 
 div.ui.fluid.search.selection.dropdown.numext,
 .eye {
+    background-color: rgb(201, 199, 195);
     width: 32px;
     border-width: 1px;
     border-color: rgb(210, 206, 198);
     border-style: solid;
+    transition: 0.4s;
 }
 
 .eye:hover {
-    background-color: rgb(210, 206, 198);
+    background-color: rgb(134, 134, 134);
+    transition: 0.4s;
 }
 
 .eye.rt {
