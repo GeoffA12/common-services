@@ -12,9 +12,14 @@
     border-width: 1px;
     font-size: 20px;
     height: 48px;
+    transition: 0.6s;
 }
 
 #gettingStarted:hover {
     color: #E1DFDB;
     background-color: rgb(111, 64, 187);
+}
+
+#partners {
+    background-color: #D2CEC6;
 }
