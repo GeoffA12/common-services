@@ -1,5 +1,5 @@
 # WeGo Services Supply Backend
-[![Generic badge](https://img.shields.io/badge/version-1.0-<COLOR>.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/version-1.0.0-<COLOR>.svg)](https://shields.io/)
 [![Generic badge](https://img.shields.io/badge/build-stable-gree.svg)](https://shields.io/) 
 [![Generic badge](https://img.shields.io/badge/code_style-SWETeam22-teal.svg)](https://bitbucket.org/swei_team22/common-services/src/development-testing/StyleAndDirectoryGuide.md)
 
