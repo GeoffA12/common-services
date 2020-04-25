@@ -11,7 +11,7 @@ postBody = {
     'firstname': 'Jeffrey',
     'lastname': 'Ng',
     'phonenumber': '1234567890'
-    }
+}
 
 
 class MyTestCase(unittest.TestCase):

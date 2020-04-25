@@ -11,12 +11,15 @@ $('#loginForm').submit(async function (e) {
     inputs = form.querySelectorAll('input');
     // console.log(inputs);
     
-    inputs.forEach((input, i) => {
+    inputs.forEach((input, ) => {
         // console.log(input);
-        login[`${input.id}`] = input.value;
+        login[`${input.id}`] = input.id == 'rememberMe' ? input.checked : input.value;
     })
     // console.log(login)
 
+    var expiration = login['rememberMe'] ? new Date().addMonths(6) : new Date().addHours(2);
+    // console.log(expiration)
+    login['expiration'] = expiration.toISOString();
     await fetch(url, {
         method: 'POST',
         headers: {

@@ -14,7 +14,7 @@ def validatePassword(password):
 
 class Account(object):
     ver = '0.1.0'
-    
+
     def __init__(self, username, email, password, firstname, lastname, phonenumber):
         self._username = username
         self._email = validateEmail(email)
@@ -22,35 +22,35 @@ class Account(object):
         self._firstname = firstname
         self._lastname = lastname
         self._phonenumber = phonenumber
-    
+
     @property
     def username(self):
         return self._username
-    
+
     @property
     def email(self):
         return self._email
-    
+
     @property
     def password(self):
         return self._password
-    
+
     @property
     def firstname(self):
         return self._firstname
-    
+
     @property
     def lastname(self):
         return self._lastname
-    
+
     @property
     def phonenumber(self):
         return self._phonenumber
-    
+
     def __repr__(self):
         return f'Account({self._username}, {self._email}, {self._password}, {self._firstname}, {self._lastname},' \
                f' {self._phonenumber})'
-    
+
     def __str__(self):
         return f'''Username: {self._username}
 Email: {self._email}

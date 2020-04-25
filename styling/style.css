@@ -84,6 +84,6 @@ div.ui.fluid.search.selection.dropdown.numext,
     margin-left: 7px;
 }
 
-input {
+input[type=text], input[type=password] {
     max-width: 100% !important;
 }

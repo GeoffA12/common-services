@@ -18,7 +18,7 @@ label {
     font-size: 14px;
 }
 
-input {
+input[type=text],input[type=password] {
     background-color: transparent;
     border-width: 1px;
     border-color : rgb(196, 194, 190);
@@ -28,6 +28,7 @@ input {
     height: 45px;
     width: 100%;
 }
+
 
 .error {
     color: red;
