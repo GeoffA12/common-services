@@ -29,7 +29,24 @@ With that said, file naming directory structures are something that we will all 
 | Documents | TitlePurpose                              | StatusReport
 
 ### Directories
-Once are repos structures are set in stone, this will be completed
+#### Front end Repositories
+```
+/repository-name
+    /images
+    /js
+    /styling
+    /index.html
+    /subsequent pages...
+```
+
+#### Back end Repositories
+```
+/repository-name
+    /unittests
+    /utils
+    /class.py
+    /webservice.py
+```
 
 ## Implementation Level Naming
 | type          | Style                                                                             | Example
