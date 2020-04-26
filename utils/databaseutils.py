@@ -46,7 +46,7 @@ def addNewUser(cloud, userTable, email, hashedPassword, phone, firstname, lastna
     cursor = sqlConnection.cursor()
 
     statement = f'INSERT INTO {userTable} VALUES (Null, %s, %s, %s, %s, %s, %s)'
-    data = (email, email, hashedPassword, phone, firstname, lastname,)
+    data = (email, email, hashedPassword, phone, firstname, lastname,) if cloud == 'supply' else (email, hashedPassword, email, phone, firstname, lastname,)
     cursor.execute(statement, data)
     sqlConnection.commit()
 
