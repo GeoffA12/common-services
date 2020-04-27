@@ -1,6 +1,7 @@
 let landingSession = () => {
     let account = localStorage.getItem('username');
     let accountHeader = document.getElementById('account');
+    let advanceButton = document.getElementById('advance');
     accountHeader.textContent = '';  
 
     if (account != null) {
@@ -44,9 +45,8 @@ let landingSession = () => {
         accountHeader.appendChild(dropdownButton);
         accountHeader.appendChild(dropdownMenu);
 
-        let getStarted = document.getElementById('gettingStarted');
-        getStarted.innerHTML = 'Go To Dashboard'
-        getStarted.setAttribute('onclick', 'goToLogin()');
+        advanceButton.innerHTML = 'Go To Dashboard';
+        advanceButton.setAttribute('onclick', 'goToLogin()');
 
     } else {
         let loginButton = document.createElement('BUTTON');
@@ -62,5 +62,8 @@ let landingSession = () => {
 
         accountHeader.appendChild(loginButton);
         accountHeader.appendChild(signupButton);
+
+        advanceButton.innerHTML = 'Get Started';
+        advanceButton.setAttribute('onclick', 'goToRegister()');
     }
 }
