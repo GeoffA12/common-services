@@ -17,6 +17,7 @@ let landingSession = () => {
         let accountAnchor = document.createElement('A');
         accountAnchor.setAttribute('href', '#');
         accountAnchor.setAttribute('id', 'accountName');
+        accountAnchor.setAttribute('class', 'op');
         
         dropdownButton.appendChild(accountAnchor);
 
