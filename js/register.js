@@ -1,34 +1,57 @@
 let inputValidation = input => {
-    let inputId = input.id;
-    let inputVal = input.value;
-    let inputValLen = inputVal.length;
+    const inputId = input.id;
+    const inputVal = input.value;
+    const inputValLen = inputVal.length;
     input.style.borderColor = 'rgb(196, 194, 190)';
+    let isValid = true;
     if (inputValLen == 0) {
-        return false;
+        isValid =  false;
     }
+    if (isValid)
     switch (inputId) {
         case 'email':
-            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            let regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             if (!(regex.test(inputVal))) {
-                return false;
+                isValid = false;
             }
             break;
 
         case 'password':
-            var passwordRegex = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/
+            let isEightCharacter = /(?=.{8,})/;
+            let containsLowercase = /(?=.*[a-z])/;
+            let containsUppercase = /(?=.*[A-Z])/;
+            let containsDigit = /(?=.*[0-9])/;
+            let containsSpecial = /(?=.*[-+_!@#$%^&*.,?])/;
             /*
                 The string must be eight characters or longer
                 The string must contain at least 1 lowercase alphabetical character
                 The string must contain at least 1 uppercase alphabetical character
                 The string must contain at least 1 numeric character
-                The string must contain at least one special character, but we are escaping reserved RegEx characters to avoid conflict
+                The string must contain at least one special character,
             */
-            if (!(passwordRegex.test(inputVal))) {
-                return false;
+            if (!isEightCharacter.test(inputVal)) {
+                console.log('Not eight characters!');
+                isValid = false
+            }
+            if (!containsLowercase.test(inputVal)) {
+                console.log('Doesn\'t contain a lowercase!');
+                isValid = false
+            }
+            if (!containsUppercase.test(inputVal)) {
+                console.log('Doesn\'t contain an uppercase!');
+                isValid = false
+            }
+            if (!containsDigit.test(inputVal)) {
+                console.log('Doesn\'t contain a digit!');
+                isValid = false
+            }
+            if (!containsSpecial.test(inputVal)) {
+                console.log('Doesn\'t contain a special character');
+                isValid = false
             }
             break;
     }
-    return true;
+    return isValid;
 }
 
 $(document).ready(
@@ -55,7 +78,7 @@ $('#registerForm').submit(async function (e) {
     let emptyFieldIds = [];
     inputs.forEach((input, i) => {
         let isValid = inputValidation(input);
-        console.log(isValid);
+        // console.log(isValid);
         if (!isValid) {
             input.style.borderColor = 'red';
             noneAreEmpty.push(isValid);
